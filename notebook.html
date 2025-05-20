@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GSoC 2025 - My Notebook</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #121212;
+      color: #d1d1d1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      color: #9ca3af;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      color: #f0a500;
+      outline: none;
+    }
+    /* Navbar styles identical to homepage */
+    nav {
+      background-color: #1f1f1f;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #333;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #f0a500;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background-color: #333333;
+      color: #f0a500;
+    }
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #d1d1d1;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    /* Responsive for navbar */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: #1f1f1f;
+        flex-direction: column;
+        width: 200px;
+        border-radius: 4px;
+        padding: 1rem;
+        display: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      }
+      .nav-links.show {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    /* Layout main content with sidebar and content */
+    main {
+      display: flex;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      gap: 2rem;
+      flex-grow: 1;
+      min-height: 60vh;
+    }
+    /* Sidebar */
+    aside.sidebar {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      width: 220px;
+      position: sticky;
+      top: 60px; /* height of navbar */
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      border-radius: 8px;
+      border: 1px solid #333;
+      box-shadow: 0 0 15px rgba(240, 165, 0, 0.15);
+      user-select: none;
+    }
+    aside.sidebar h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #f0a500;
+    }
+    aside.sidebar a {
+      display: block;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+    aside.sidebar a:hover,
+    aside.sidebar a:focus {
+      background-color: #333;
+      color: #f0a500;
+      outline: none;
+    }
+    aside.sidebar a.active {
+      background-color: #f0a500;
+      color: #121212;
+      font-weight: 700;
+    }
+    /* Content */
+    article.content {
+      flex-grow: 1;
+    }
+    section.week {
+      background-color: #1f1f1f;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 15px rgba(240, 165, 0, 0.2);
+      scroll-margin-top: 70px; /* for scroll offset below navbar */
+    }
+    section.week h2.week-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f0a500;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    section.week h3 {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      margin-bottom: 0.2rem;
+      color: #f0a500;
+      user-select: text;
+    }
+    section.week p.dates {
+      font-size: 0.9rem;
+      color: #777;
+      opacity: 0.7;
+      margin-top: -0.4rem;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    section.week p {
+      margin-bottom: 0.8rem;
+      user-select: text;
+    }
+    /* Links component */
+    section.week ul.links-list {
+      list-style: none;
+      margin-left: 1rem;
+      padding-left: 0;
+    }
+    section.week ul.links-list li {
+      margin-bottom: 0.5rem;
+    }
+    section.week ul.links-list li a {
+      color: #9ca3af;
+      font-weight: normal;
+      font-size: 0.95rem;
+    }
+    section.week ul.links-list li a:hover,
+    section.week ul.links-list li a:focus {
+      color: #f0a500;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      color: #666;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+      border-top: 1px solid #333;
+      user-select: none;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo" tabindex="0">GSoC 2025 Blog</div>
+    <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="nav-links" role="navigation" aria-label="Primary Navigation">
+      <a href="index.html">Home</a>
+      <a href="notebook.html" aria-current="page">My Notebook</a>
+      <a href="progress.html">My Progress</a>
+      <a href="about.html">About Me</a>
+      <a href="contact.html">Contact Me</a>
+    </div>
+  </nav>
+
+  <main>
+    <aside class="sidebar" aria-label="Weekly Navigation">
+      <h2>Weekly Progress</h2>
+      <a href="#week1" class="active">Week 1</a>
+      <a href="#week2">Week 2</a>
+      <a href="#week3">Week 3</a>
+      <a href="#week4">Week 4</a>
+    </aside>
+
+    <article class="content">
+      <section class="week" id="week1">
+        <h2 class="week-title">Week 1</h2>
+        <p class="dates">January 1 - January 7, 2025</p>
+        <h3>Outcome</h3>
+        <p>Set up project repository and environment.</p>
+        <h3>What I did</h3>
+        <p>Installed necessary tools and libraries, created initial project structure.</p>
+        <h3>Learnings</h3>
+        <p>Gained familiarity with the project requirements and setup process.</p>
+        <h3>Confusions</h3>
+        <p>Uncertainty about some library functionalities.</p>
+        <h3>Next Week Targets</h3>
+        <p>Start implementing the first feature.</p>
+        <h3>Links</h3>
+        <ul class="links-list">
+          <li><a href="#" target="_blank" rel="noopener">Project Repository</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Setup Guide</a></li>
+        </ul>
+      </section>
+
+      <section class="week" id="week2">
+        <h2 class="week-title">Week 2</h2>
+        <p class="dates">January 8 - January 14, 2025</p>
+        <h3>Outcome</h3>
+        <p>Completed the implementation of the first feature.</p>
+        <h3>What I did</h3>
+        <p>Developed the core functionality and wrote initial tests.</p>
+        <h3>Learnings</h3>
+        <p>Improved understanding of the codebase and testing frameworks.</p>
+        <h3>Confusions</h3>
+        <p>Encountered issues with integration tests.</p>
+        <h3>Next Week Targets</h3>
+        <p>Refactor code and improve test coverage.</p>
+        <h3>Links</h3>
+        <ul class="links-list">
+          <li><a href="#" target="_blank" rel="noopener">Feature Design Doc</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Test Plan</a></li>
+        </ul>
+      </section>
+
+      <section class="week" id="week3">
+        <h2 class="week-title">Week 3</h2>
+        <p class="dates">January 15 - January 21, 2025</p>
+        <h3>Outcome</h3>
+        <p>Refactored code and improved documentation.</p>
+        <h3>What I did</h3>
+        <p>Cleaned up code, added comments, and updated README.</p>
+        <h3>Learnings</h3>
+        <p>Realized importance of documentation for future reference.</p>
+        <h3>Confusions</h3>
+        <p>Still unclear about some advanced features.</p>
+        <h3>Next Week Targets</h3>
+        <p>Begin working on the second feature.</p>
+        <h3>Links</h3>
+        <ul class="links-list">
+          <li><a href="#" target="_blank" rel="noopener">Code Style Guide</a></li>
+          <li><a href="#" target="_blank" rel="noopener">README Updates</a></li>
+        </ul>
+      </section>
+
+      <section class="week" id="week4">
+        <h2 class="week-title">Week 4</h2>
+        <p class="dates">January 22 - January 28, 2025</p>
+        <h3>Outcome</h3>
+        <p>Started implementation of the second feature.</p>
+        <h3>What I did</h3>
+        <p>Designed the architecture and began coding.</p>
+        <h3>Learnings</h3>
+        <p>Gained insights into feature design and user experience considerations.</p>
+        <h3>Confusions</h3>
+        <p>Unsure about some design choices.</p>
+        <h3>Next Week Targets</h3>
+        <p>Continue development and seek feedback.</p>
+        <h3>Links</h3>
+        <ul class="links-list">
+          <li><a href="#" target="_blank" rel="noopener">Design Docs</a></li>
+          <li><a href="#" target="_blank" rel="noopener">User Feedback</a></li>
+        </ul>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    &copy; 2025 Your Name - Google Summer of Code
+  </footer>
+
+  <script>
+    // Navbar toggle for mobile
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    function toggleNav() {
+      navLinks.classList.toggle('show');
+      hamburger.classList.toggle('active');
+    }
+
+    hamburger.addEventListener('click', toggleNav);
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleNav();
+      }
+    });
+
+    // Sidebar link scroll and active highlight
+    const sidebarLinks = document.querySelectorAll('aside.sidebar a');
+    const weeks = document.querySelectorAll('section.week');
+
+    // Smooth scroll on click
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href').substring(1);
+        const section = document.getElementById(id);
+        if (section) {
+          section.scrollIntoView({behavior: 'smooth', block: 'start'});
+          setActiveLink(id);
+        }
+        // On small screens close nav if open (optional)
+      });
+    });
+
+    function setActiveLink(id) {
+      sidebarLinks.forEach(link => {
+        if (link.getAttribute('href') === `#${id}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    // On scroll highlight current week link
+    window.addEventListener('scroll', () => {
+      let fromTop = window.scrollY + 80; // offset for navbar height and margin
+
+      let currentId = null;
+      weeks.forEach(section => {
+        if (section.offsetTop <= fromTop) {
+          currentId = section.id;
+        }
+      });
+
+      if(currentId) {
+        setActiveLink(currentId);
+      }
+    });
+  </script>
+</body>
+</html>
+
