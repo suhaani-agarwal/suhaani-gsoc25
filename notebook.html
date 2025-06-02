@@ -176,8 +176,8 @@
       }
       section.week p.dates {
         font-size: 0.9rem;
-        color: #777;
-        opacity: 0.7;
+        color: #aaaaaa;
+        opacity: 1;
         margin-top: -0.4rem;
         margin-bottom: 1rem;
         font-style: italic;
@@ -241,7 +241,9 @@
     <main>
       <aside class="sidebar" aria-label="Weekly Navigation">
         <h2>Weekly Progress</h2>
-        <a href="#week0" class="active">Week 0</a>
+        <a href="#week0(cbp1)" class="active">Week 0</a>
+        <a href="#week0(cbp2)">Week 0</a>
+        <a href="#week0(cbp3)">Week 0</a>
         <a href="#week1">Week 1</a>
         <a href="#week2">Week 2</a>
         <a href="#week3">Week 3</a>
@@ -249,8 +251,8 @@
 
       <article class="content">
 
-              <section class="week" id="week0">
-        <h2 class="week-title">Week 0</h2>
+              <section class="week" id="week0(cbp1)">
+        <h2 class="week-title">Week 0 (Community Bonding Period)</h2>
         <p class="dates">May 15 - May 20, 2025</p>
         <h3>Outcome</h3>
         <p>Ported three visualizations from the old Animint gallery to the new Animint2 gallery and submitted a pull request.</p>
@@ -313,9 +315,136 @@
         </ul>
       </section>
 
+        <section class="week" id="week0(cbp2)">
+  <h2 class="week-title">Week 0 (Community Bonding Period)</h2>
+  <p class="dates">May 21st - May 28th, 2025</p>
+  
+  <h3>Outcome</h3>
+  <p>Successfully resolved the geom_tile transition issue, created demonstration videos for previous visualizations, and ported six additional visualizations to the new gallery which were merged.</p>
+  
+  <h3>What I did</h3>
+  <ul class="links-list">
+    <li>Solved geom_tile transition issue</li>
+    <li>Created comprehensive demonstration videos for all three previously ported visualizations</li>
+    <li>Successfully got PR #29 merged into the main gallery repository</li>
+    <li>Ported six additional visualizations from old to new gallery:
+      <ul>
+        <li>#43 - Montreal Bikes Jan 2016</li>
+        <li>#31 - Demo of Constrained PDPA</li>
+        <li>#30 - Cost/slack minimization over all feature thresholds</li>
+        <li>#50 - Segmentation model selection with BIC</li>
+        <li>#5 - Gradient descent for neural network and linear model</li>
+        <li>#6 - Gradient descent for regression</li>
+      </ul>
+    </li>
+    <li>Submitted and got PR #30 merged for these new visualizations</li>
+    <li>Ensured all visualizations maintained their original functionality while using Animint2 syntax</li>
+  </ul>
+  
+  <h3>Learnings</h3>
+<ul class="links-list">
+  <li><strong>Solved geom_tile transition issue</strong> by implementing a two-layer approach: (documented in PR #29)
+      <ul>
+        <li>Base layer for smooth transitions (showSelected="time2") with fill colors but no borders</li>
+        <li>Selection layer for click interactions (clickSelects="id") with border colors but no fill</li>
+      </ul>
+    </li>
+  <li>Data format requirements for different geoms</li>
+</ul>
+  
+  <h3>Confusions/Issues</h3>
+  <ul class="links-list">
+    <li>Initial uncertainty about the best approach to solve the geom_tile transition issue</li>
+    <li>Some visualizations required significant restructuring to work with Animint2</li>
+    <li>Ensuring consistent behavior across all browsers was occasionally challenging</li>
+  </ul>
+  
+  <h3>Next Week Targets</h3>
+<ul class="links-list">
+  <li>Investigate geom_abline bug (#142)</li>
+  <li>Explore tooltips implementation</li>
+  <li>Port remaining high-priority visualizations</li>
+</ul>
+  
+  <h3>Links</h3>
+  <ul class="links-list">
+    <li><a href="https://github.com/animint/gallery/pull/30" target="_blank" rel="noopener">Pull Request #30 (New visualizations)</a></li>
+    <li><a href="https://github.com/animint/gallery/pull/29" target="_blank" rel="noopener">Merged PR #29 (Initial visualizations)</a></li>
+    <li><a href="https://animint.github.io/gallery/" target="_blank" rel="noopener">Updated Animint2 Gallery</a></li>
+    <li>Newly ported visualizations:
+      <ul>
+        <li><a href="https://suhaani-agarwal.github.io/montreal-bikes-Jan2016/" target="_blank" rel="noopener">#43 - Montreal Bikes Jan 2016</a></li>
+        <li><a href="https://suhaani-agarwal.github.io/Demo_Constrained_PDPA/" target="_blank" rel="noopener">#31 - Demo of Constrained PDPA</a></li>
+        <li><a href="https://suhaani-agarwal.github.io/figure-penaltyLearning/" target="_blank" rel="noopener">#30 - Cost/slack minimization</a></li>
+        <li><a href="https://suhaani-agarwal.github.io/intreg-BIC/" target="_blank" rel="noopener">#50 - Segmentation model selection with BIC</a></li>
+        <li><a href="https://suhaani-agarwal.github.io/Ch18-neural-networks-sim/" target="_blank" rel="noopener">#5 - Gradient descent for neural networks</a></li>
+        <li><a href="https://suhaani-agarwal.github.io/figure-gradient-descent-regression/" target="_blank" rel="noopener">#6 - Gradient descent for regression</a></li>
+      </ul>
+    </li>
+  </ul>
+</section>
+        <section class="week" id="week0(cbp3)">
+  <h2 class="week-title">Week 0 (Community Bonding Period)</h2>
+  <p class="dates">May 28th - June 1, 2025</p>
+  
+  <h3>Outcome</h3>
+  <p>Investigated geom_abline bug and proposed solution, implemented new D3-based tooltip system.</p>
+  
+  <h3>What I did</h3>
+  <ul class="links-list">
+    <li>Analyzed geom_abline boundary issue (#142) with reproducible examples</li>
+    <li>Identified root cause: clipping not reapplied during update_axes</li>
+    <li>Proposed JS solution to recalculate segments post-update</li>
+    <li>Switched tooltip implementation from tippy.js to native D3</li>
+    <li>Created unified tooltip div that follows mouse position</li>
+    <li>Updated all tooltip tests for new implementation</li>
+  </ul>
+  
+  <h3>Learnings</h3>
+  <ul class="links-list">
+    <li><strong>geom_abline behavior</strong>:
+      <ul>
+        <li>Initial clipping done by R's pre_process function</li>
+        <li>Boundary constraints lost during scale updates</li>
+        <li>Need to recalculate endpoints in JS using current scale domains</li>
+      </ul>
+    </li>
+    <li><strong>Tooltip implementation</strong>:
+      <ul>
+        <li>D3 outperforms tippy.js for Animint's use case</li>
+        <li>Single dynamic div more efficient than multiple tooltips</li>
+        <li>Better integration with existing D3 infrastructure</li>
+      </ul>
+    </li>
+    <li>Renderer-compiler interaction during axis updates</li>
+    <li>Test case requirements for renderer bugs</li>
+  </ul>
+  
+  <h3>Confusions</h3>
+  <ul class="links-list">
+    <li>Optimal architectural layer for geom_abline clipping</li>
+    <li>Potential edge cases in D3 tooltip implementation</li>
+    <li>Interaction between scale computations in R vs JS</li>
+  </ul>
+  
+  <h3>Next Week Targets</h3>
+  <ul class="links-list">
+    <li>Create failing renderer test for geom_abline issue</li>
+    <li>Implement JS solution for abline boundary clipping</li>
+    <li>Finalize D3 tooltip PR (#191) with test fixes</li>
+    <li>Get tooltip implementation merged</li>
+  </ul>
+  
+  <h3>Links</h3>
+  <ul class="links-list">
+    <li><a href="https://github.com/animint/animint2/issues/142" target="_blank" rel="noopener">geom_abline bug (#142)</a></li>
+    <li><a href="https://github.com/animint/animint2/pull/191" target="_blank" rel="noopener">D3 tooltip PR (#191)</a></li>
+    <li><a href="https://github.com/animint/animint2/issues/179" target="_blank" rel="noopener">Tooltip feature (#179)</a></li>
+  </ul>
+</section>
         <section class="week" id="week1">
           <h2 class="week-title">Week 1</h2>
-          <p class="dates">May 21st - May 28th, 2025</p>
+          <p class="dates">June 2 - June 9, 2025</p>
           <h3>Outcome</h3>
           <p></p>
           <h3>What I did</h3>
@@ -337,7 +466,7 @@
 
         <section class="week" id="week2">
           <h2 class="week-title">Week 2</h2>
-          <p class="dates">June, 2025</p>
+          <p class="dates">June 9 - June 16, 2025</p>
           <h3>Outcome</h3>
           <p>.</p>
           <h3>What I did</h3>
@@ -351,10 +480,10 @@
           <h3>Links</h3>
           <ul class="links-list">
             <li>
-              <a href="#" target="_blank" rel="noopener">Code Style Guide</a>
+              <a href="#" target="_blank" rel="noopener"></a>
             </li>
             <li>
-              <a href="#" target="_blank" rel="noopener">README Updates</a>
+              <a href="#" target="_blank" rel="noopener"></a>
             </li>
           </ul>
         </section>
