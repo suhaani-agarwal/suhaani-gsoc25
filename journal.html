@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GSoC 2025 - Development Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      /* Reset & base */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        background: linear-gradient(135deg, #f8fffe 0%, #f0f9ff 50%, #ecfdf5 100%);
+        color: #1f2937;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.7;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-weight: 400;
+      }
+      
+      a {
+        color: #6b7280;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+      }
+      
+      a:hover,
+      a:focus {
+        color: #059669;
+        outline: none;
+      }
+      
+      /* Navbar with light glass effect */
+      nav {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+        padding: 1.25rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+      
+      .logo {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        font-size: 1.75rem;
+        background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.5px;
+        user-select: none;
+        transition: transform 0.3s ease;
+      }
+      
+      .logo:hover {
+        transform: scale(1.05);
+      }
+      
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      
+      .nav-links a {
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .nav-links a::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .nav-links a:hover::before,
+      .nav-links a:focus::before {
+        opacity: 1;
+      }
+      
+      .nav-links a[aria-current="page"] {
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(14, 165, 233, 0.15) 100%);
+        color: #059669;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+      }
+      
+      /* Hamburger Menu */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 6px;
+        padding: 8px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+      
+      .hamburger:hover {
+        background-color: rgba(34, 197, 94, 0.1);
+      }
+      
+      .hamburger div {
+        width: 28px;
+        height: 3px;
+        background: linear-gradient(90deg, #059669 0%, #0ea5e9 100%);
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* Enhanced responsive navbar */
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        
+        .nav-links {
+          position: absolute;
+          top: calc(100% + 1px);
+          right: 1.5rem;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          flex-direction: column;
+          width: 250px;
+          border-radius: 16px;
+          padding: 1.5rem;
+          display: none;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          border: 1px solid rgba(34, 197, 94, 0.1);
+          gap: 0.5rem;
+        }
+        
+        .nav-links.show {
+          display: flex;
+          animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hamburger {
+          display: flex;
+        }
+        
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      }
+      
+      /* Main layout with improved spacing */
+      main {
+        display: flex;
+        max-width: 1400px;
+        margin: 3rem auto;
+        padding: 0 2rem;
+        gap: 3rem;
+        flex-grow: 1;
+        min-height: 70vh;
+      }
+      
+      /* Enhanced sidebar with light theme */
+      aside.sidebar {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        padding: 1rem;
+        width: 280px;
+        position: sticky;
+        top: 120px;
+        height: fit-content;
+        max-height: calc(100vh - 140px);
+        overflow-y: auto;
+        border-radius: 20px;
+        border: 1px solid rgba(34, 197, 94, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        user-select: none;
+      }
+      
+      aside.sidebar h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #059669;
+        letter-spacing: -0.3px;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+      }
+      
+      aside.sidebar a {
+        display: block;
+        margin: 0.75rem 0;
+        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: #6b7280;
+        font-weight: 500;
+        font-size: 0.95rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      aside.sidebar a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(180deg, #059669 0%, #0ea5e9 100%);
+        transform: scaleY(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      aside.sidebar a:hover::before,
+      aside.sidebar a.active::before {
+        transform: scaleY(1);
+      }
+      
+      aside.sidebar a:hover,
+      aside.sidebar a:focus {
+        background: rgba(34, 197, 94, 0.08);
+        color: #059669;
+        outline: none;
+        transform: translateX(8px);
+      }
+      
+      aside.sidebar a.active {
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(14, 165, 233, 0.1) 100%);
+        color: #059669;
+        font-weight: 600;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        transform: translateX(8px);
+      }
+      
+      /* Content area with better typography */
+      article.content {
+        flex-grow: 1;
+        max-width: none;
+      }
+      
+      /* Enhanced week sections */
+      section.week {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        scroll-margin-top: 120px;
+        border: 1px solid rgba(34, 197, 94, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      section.week::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(34, 197, 94, 0.3) 50%, transparent 100%);
+      }
+      
+      section.week:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        border-color: rgba(34, 197, 94, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      section.week h2.week-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        user-select: none;
+        letter-spacing: -1px;
+        line-height: 1.2;
+      }
+      
+      section.week h3 {
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        color: #059669;
+        user-select: text;
+        letter-spacing: -0.3px;
+        position: relative;
+        padding-left: 1.5rem;
+      }
+      
+      section.week h3::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 24px;
+        background: linear-gradient(180deg, #059669 0%, #0ea5e9 100%);
+        border-radius: 2px;
+      }
+      
+      section.week p.dates {
+        font-size: 1rem;
+        color: #9ca3af;
+        opacity: 0.9;
+        margin-top: -0.5rem;
+        margin-bottom: 2rem;
+        font-style: italic;
+        font-weight: 400;
+        padding-left: 1.5rem;
+      }
+      
+      section.week p {
+        margin-bottom: 1.25rem;
+        user-select: text;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #374151;
+      }
+      
+      /* Enhanced lists with better visual hierarchy */
+      section.week ul.links-list {
+        list-style: none;
+        margin-left: 1.5rem;
+        padding-left: 0;
+        margin-bottom: 1.5rem;
+      }
+      
+      section.week ul.links-list li {
+        margin-bottom: 1rem;
+        position: relative;
+        padding-left: 2rem;
+        line-height: 1.6;
+      }
+      
+      section.week ul.links-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.75rem;
+        width: 6px;
+        height: 6px;
+        background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
+        border-radius: 50%;
+        transform: translateY(-50%);
+      }
+      
+      section.week ul.links-list li a {
+        color: #6b7280;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-underline-offset: 4px;
+      }
+      
+      section.week ul.links-list li a:hover,
+      section.week ul.links-list li a:focus {
+        color: #059669;
+        text-decoration-color: #059669;
+        transform: translateX(4px);
+      }
+      
+      /* Nested lists */
+      section.week ul.links-list ul {
+        margin-top: 0.75rem;
+        margin-left: 1rem;
+        border-left: 2px solid rgba(34, 197, 94, 0.2);
+        padding-left: 1.5rem;
+      }
+      
+      section.week ul.links-list ul li::before {
+        background: rgba(34, 197, 94, 0.6);
+        width: 4px;
+        height: 4px;
+      }
+      
+      /* Code elements */
+      code {
+        font-family: "JetBrains Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace;
+        background: rgba(34, 197, 94, 0.1);
+        color: #059669;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.9em;
+        font-weight: 500;
+      }
+      
+      /* Enhanced footer */
+      footer {
+        text-align: center;
+        color: #9ca3af;
+        padding: 2rem 0;
+        font-size: 0.95rem;
+        border-top: 1px solid rgba(34, 197, 94, 0.1);
+        user-select: none;
+        margin-top: auto;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(20px);
+      }
+      
+      /* Scroll animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .fade-in {
+        animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: rgba(243, 244, 246, 0.5);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #059669 0%, #0ea5e9 100%);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #047857 0%, #0284c7 100%);
+      }
+      
+      /* Responsive design improvements */
+      @media (max-width: 1024px) {
+        main {
+          gap: 2rem;
+          padding: 0 1.5rem;
+        }
+        
+        aside.sidebar {
+          width: 240px;
+          padding: 1.5rem;
+        }
+        
+        section.week {
+          padding: 2rem;
+        }
+        
+        section.week h2.week-title {
+          font-size: 2rem;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        main {
+          flex-direction: column;
+          gap: 2rem;
+          margin: 2rem auto;
+        }
+        
+        aside.sidebar {
+          width: 100%;
+          position: static;
+          height: auto;
+          max-height: none;
+          order: 2;
+          margin-top: 2rem;
+        }
+        
+        article.content {
+          order: 1;
+        }
+        
+        section.week {
+          padding: 1.5rem;
+          margin-bottom: 2rem;
+        }
+        
+        section.week h2.week-title {
+          font-size: 1.75rem;
+        }
+        
+        section.week h3 {
+          font-size: 1.2rem;
+          margin-top: 2rem;
+        }
+      }
+      
+      /* Loading state */
+      .loading {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .loaded {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* Interactive hover effects for links */
+      section.week ul.links-list li a {
+        position: relative;
+      }
+      
+      section.week ul.links-list li a::after {
+        content: '→';
+        position: absolute;
+        right: -20px;
+        opacity: 0;
+        transition: all 0.3s ease;
+        color: #059669;
+      }
+      
+      section.week ul.links-list li a:hover::after {
+        opacity: 1;
+        right: -15px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="logo" tabindex="0">GSoC 2025 Journal</div>
+      <div
+        class="hamburger"
+        aria-label="Toggle navigation menu"
+        role="button"
+        tabindex="0"
+      >
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="nav-links" role="navigation" aria-label="Primary Navigation">
+        <a href="index.html">Home</a>
+        <a href="notebook.html" aria-current="page">Development Journal</a>
+        <a href="progress.html">Progress Report</a>
+        <a href="about.html">About Me</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <main>
+      <aside class="sidebar" aria-label="Weekly Navigation">
+        <h2>Weekly Progress</h2>
+        <a href="#week0(cbp1)" class="active">Week 0 - Part I</a>
+        <a href="#week0(cbp2)">Week 0 - Part II</a>
+        <a href="#week0(cbp3)">Week 0 - Part III</a>
+        <a href="#week1">Week 1</a>
+        <a href="#week2">Week 2</a>
+        <a href="#week3">Week 3</a>
+      </aside>
+
+      <article class="content">
+        
+        <section class="week loading" id="week0(cbp1)">
+          <h2 class="week-title">Week 0 (Community Bonding Period)</h2>
+          <p class="dates">May 15 - May 20, 2025</p>
+          
+          <h3>Outcome</h3>
+          <p>Ported three visualizations from the old Animint gallery to the new Animint2 gallery and submitted a pull request.</p>
+          
+          <h3>What I did</h3>
+          <p>Due to ongoing exams, my time was limited, but I managed to:</p>
+          <ul class="links-list">
+            <li>Port three key visualizations from the old gallery to the new Animint2 syntax:
+              <ul>
+                <li><code>#55</code> - American Temperature Maps</li>
+                <li><code>#41</code> - World Bank paper visualization</li>
+                <li><code>#35</code> - ChIP seq data unaligned visualization</li>
+              </ul>
+            </li>
+            <li>Submitted <code>PR #29</code> to the gallery repository</li>
+            <li>Fixed issues in the 41st and 35th visualizations</li>
+            <li>Addressed mentor feedback on the 55th visualization</li>
+          </ul>
+          
+          <h3>Learnings</h3>
+          <p>This week was incredibly educational as I:</p>
+          <ul class="links-list">
+            <li>Gained deep understanding of Animint functions and capabilities</li>
+            <li>Learned the process of converting old Animint code to new Animint2 syntax</li>
+            <li>Improved skills in making visualizations more clear, sophisticated and user-friendly</li>
+            <li>Understood how to implement better interactivity in visualizations</li>
+            <li>Learned to handle different types of geoms (points, tiles, lines) in Animint better</li>
+            <li>Improved my understanding of the gallery structure and contribution process</li>
+            <li>Explored different old visualization source codes and compiled a list of visualizations to be ported next</li>
+          </ul>
+          
+          <h3>Confusions/Issues</h3>
+          <p>Some challenges I encountered:</p>
+          <ul class="links-list">
+            <li>Geom_tile transitions aren't smooth in the visualizations</li>
+            <li>Need to investigate if this is a bug by creating a minimal reproducible example</li>
+            <li>Need to check test cases to see if smooth transitions in geom_tile are properly tested</li>
+            <li>Certain interactive elements required more work than expected to port properly</li>
+          </ul>
+          
+          <h3>Next Week Targets</h3>
+          <ul class="links-list">
+            <li>Port other visualizations</li>
+            <li>Complete remaining mentor suggestions on the 55th visualization</li>
+            <li>Create demonstration videos once visualization outlooks are finalized</li>         
+            <li>Investigate the geom_tile transition issue</li>
+          </ul>
+          
+          <h3>Links</h3>
+          <ul class="links-list">
+            <li><a href="https://github.com/animint/gallery/pull/29" target="_blank" rel="noopener">Pull Request #29</a></li>
+            <li><a href="https://rcdata.nau.edu/genomic-ml/animint-gallery/" target="_blank" rel="noopener">Old Animint Gallery</a></li>
+            <li><a href="https://animint.github.io/gallery/" target="_blank" rel="noopener">New Animint2 Gallery</a></li>
+            <li><a href="https://suhaani-agarwal.github.io/gallery/" target="_blank" rel="noopener">My Forked Gallery Preview</a></li>
+            <li><a href="https://suhaani-agarwal.github.io/central-american-temperature-maps/" target="_blank" rel="noopener">#55 - American Temperature Maps</a></li>
+            <li><a href="https://suhaani-agarwal.github.io/WorldBank-paper/" target="_blank" rel="noopener">#41 - World Bank paper</a></li>
+            <li><a href="https://suhaani-agarwal.github.io/chip-seq-unaligned/" target="_blank" rel="noopener">#35 - ChIP seq data</a></li>
+          </ul>
+        </section>
+
+        <section class="week loading" id="week0(cbp2)">
+          <h2 class="week-title">Week 0 (Community Bonding Period)</h2>
+          <p class="dates">May 21st - May 28th, 2025</p>
+          
+          <h3>Outcome</h3>
+          <p>Successfully resolved the geom_tile transition issue, created demonstration videos for previous visualizations, and ported six additional visualizations to the new gallery which were merged.</p>
+          
+          <h3>What I did</h3>
+          <ul class="links-list">
+            <li>Solved geom_tile transition issue</li>
+            <li>Created comprehensive demonstration videos for all three previously ported visualizations</li>
+            <li>Successfully got <code>PR #29</code> merged into the main gallery repository</li>
+            <li>Ported six additional visualizations from old to new gallery:
+              <ul>
+                <li><code>#43</code> - Montreal Bikes Jan 2016</li>
+                <li><code>#31</code> - Demo of Constrained PDPA</li>
+                <li><code>#30</code> - Cost/slack minimization over all feature thresholds</li>
+                <li><code>#50</code> - Segmentation model selection with BIC</li>
+                <li><code>#5</code> - Gradient descent for neural network and linear model</li>
+                <li><code>#6</code> - Gradient descent for regression</li>
+              </ul>
+            </li>
+            <li>Submitted and got <code>PR #30</code> merged for these new visualizations</li>
+            <li>Ensured all visualizations maintained their original functionality while using Animint2 syntax</li>
+          </ul>
+          
+          <h3>Learnings</h3>
+          <ul class="links-list">
+            <li><strong>Solved geom_tile transition issue</strong> by implementing a two-layer approach: (documented in PR #29)
+                <ul>
+                  <li>Base layer for smooth transitions (<code>showSelected="time2"</code>) with fill colors but no borders</li>
+                  <li>Selection layer for click interactions (<code>clickSelects="id"</code>) with border colors but no fill</li>
+                </ul>
+              </li>
+            <li>Data format requirements for different geoms</li>
+          </ul>
+          
+          <h3>Confusions/Issues</h3>
+          <ul class="links-list">
+            <li>Initial uncertainty about the best approach to solve the geom_tile transition issue</li>
+            <li>Some visualizations required significant restructuring to work with Animint2</li>
+            <li>Ensuring consistent behavior across all browsers was occasionally challenging</li>
+          </ul>
+          
+          <h3>Next Week Targets</h3>
+          <ul class="links-list">
+            <li>Investigate geom_abline bug (<code>#142</code>)</li>
+            <li>Explore tooltips implementation</li>
+            <li>Port remaining high-priority visualizations</li>
+          </ul>
+          
+          <h3>Links</h3>
+          <ul class="links-list">
+            <li><a href="https://github.com/animint/gallery/pull/30" target="_blank" rel="noopener">Pull Request #30 (New visualizations)</a></li>
+            <li><a href="https://github.com/animint/gallery/pull/29" target="_blank" rel="noopener">Merged PR #29 (Initial visualizations)</a></li>
+            <li><a href="https://animint.github.io/gallery/" target="_blank" rel="noopener">Updated Animint2 Gallery</a></li>
+            <li>Newly ported visualizations:
+              <ul>
+                <li><a href="https://suhaani-agarwal.github.io/montreal-bikes-Jan2016/" target="_blank" rel="noopener">#43 - Montreal Bikes Jan 2016</a></li>
+                <li><a href="https://suhaani-agarwal.github.io/Demo_Constrained_PDPA/" target="_blank" rel="noopener">#31 - Demo of Constrained PDPA</a></li>
+                <li><a href="https://suhaani-agarwal.github.io/figure-penaltyLearning/" target="_blank" rel="noopener">#30 - Cost/slack minimization</a></li>
+                <li><a href="https://suhaani-agarwal.github.io/intreg-BIC/" target="_blank" rel="noopener">#50 - Segmentation model selection with BIC</a></li>
+                <li><a href="https://suhaani-agarwal.github.io/Ch18-neural-networks-sim/" target="_blank" rel="noopener">#5 - Gradient descent for neural networks</a></li>
+                <li><a href="https://suhaani-agarwal.github.io/figure-gradient-descent-regression/" target="_blank" rel="noopener">#6 - Gradient descent for regression</a></li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section class="week loading" id="week0(cbp3)">
+          <h2 class="week-title">Week 0 (Community Bonding Period)</h2>
+          <p class="dates">May 28th - June 1, 2025</p>
+          
+          <h3>Outcome</h3>
+          <p>Investigated geom_abline bug and proposed solution, implemented new D3-based tooltip system.</p>
+          
+          <h3>What I did</h3>
+          <ul class="links-list">
+            <li>Analyzed geom_abline boundary issue (<code>#142</code>) with reproducible examples</li>
+            <li>Identified root cause: clipping not reapplied during <code>update_axes</code></li>
+            <li>Proposed JS solution to recalculate segments post-update</li>
+            <li>Switched tooltip implementation from <code>tippy.js</code> to native D3</li>
+            <li>Created unified tooltip div that follows mouse position</li>
+            <li>Updated all tooltip tests for new implementation</li>
+          </ul>
+          
+          <h3>Learnings</h3>
+          <ul class="links-list">
+            <li><strong>geom_abline behavior</strong>:
+              <ul>
+                <li>Initial clipping done by R's <code>pre_process</code> function</li>
+                <li>Boundary constraints lost during scale updates</li>
+                <li>Need to recalculate endpoints in JS using current scale domains</li>
+              </ul>
+            </li>
+            <li><strong>Tooltip implementation</strong>:
+              <ul>
+                <li>D3 outperforms <code>tippy.js</code> for Animint's use case</li>
+                <li>Single dynamic div more efficient than multiple tooltips</li>
+                <li>Better integration with existing D3 infrastructure</li>
+              </ul>
+            </li>
+            <li>Renderer-compiler interaction during axis updates</li>
+            <li>Test case requirements for renderer bugs</li>
+          </ul>
+          
+          <h3>Confusions</h3>
+          <ul class="links-list">
+            <li>Still unsure about how to implement the js side function for clipping geom_ablines</li>
+            <li>Facing some problems with the tests for tooltips in simulating hovering over the component - to get the exact position of the component on the viewport</li>
+          </ul>
+          
+          <h3>Next Week Targets</h3>
+          <ul class="links-list">
+            <li>Create failing renderer test for geom_abline issue</li>
+            <li>Implement JS solution for abline boundary clipping</li>
+            <li>Finalize D3 tooltip PR (<code>#191</code>) with test fixes</li>
+            <li>Get tooltip implementation merged</li>
+          </ul>
+          
+          <h3>Links</h3>
+          <ul class="links-list">
+            <li><a href="https://github.com/animint/animint2/issues/142" target="_blank" rel="noopener">geom_abline bug (#142)</a></li>
+            <li><a href="https://github.com/animint/animint2/pull/191" target="_blank" rel="noopener">D3 tooltip PR (#191)</a></li>
+            <li><a href="https://github.com/animint/animint2/issues/179" target="_blank" rel="noopener">Tooltip feature (#179)</a></li>
+          </ul>
+        </section>
+
+        <section class="week loading" id="week1">
+          <h2 class="week-title">Week 1</h2>
+          <p class="dates">June 2 - June 9, 2025</p>
+          
+          <h3>Outcome</h3>
+          <p>Coming soon...</p>
+          
+          <h3>What I did</h3>
+          <p>Development in progress...</p>
+          
+          <h3>Learnings</h3>
+          <p>To be documented...</p>
+          
+          <h3>Confusions</h3>
+          <p>To be addressed...</p>
+          
+          <h3>Next Week Targets</h3>
+          <p>Planning in progress...</p>
+          
+          <h3>Links</h3>
+          <ul class="links-list">
+            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
+          </ul>
+        </section>
+
+        <section class="week loading" id="week2">
+          <h2 class="week-title">Week 2</h2>
+          <p class="dates">June 9 - June 16, 2025</p>
+          
+          <h3>Outcome</h3>
+          <p>Coming soon...</p>
+          
+          <h3>What I did</h3>
+          <p>Development in progress...</p>
+          
+          <h3>Learnings</h3>
+          <p>To be documented...</p>
+          
+          <h3>Confusions</h3>
+          <p>To be addressed...</p>
+          
+          <h3>Next Week Targets</h3>
+          <p>Planning in progress...</p>
+          
+          <h3>Links</h3>
+          <ul class="links-list">
+            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
+          </ul>
+        </section>
+
+        <section class="week loading" id="week3">
+          <h2 class="week-title">Week 3</h2>
+          <p class="dates">June 16 - June 23, 2025</p>
+          
+          <h3>Outcome</h3>
+          <p>Coming soon...</p>
+          
+          <h3>What I did</h3>
+          <p>Development in progress...</p>
+          
+          <h3>Learnings</h3>
+          <p>To be documented...</p>
+          
+          <h3>Confusions</h3>
+          <p>To be addressed...</p>
+          
+          <h3>Next Week Targets</h3>
+          <p>Planning in progress...</p>
+          
+          <h3>Links</h3>
+          <ul class="links-list">
+            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer>&copy; 2025 Suhaani Agarwal - Google Summer of Code Development Journal</footer>
+
+    <script>
+      // Enhanced navbar toggle for mobile
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+
+      function toggleNav() {
+        navLinks.classList.toggle("show");
+        hamburger.classList.toggle("active");
+        
+        // Enhanced hamburger animation
+        const bars = hamburger.querySelectorAll('div');
+        if (navLinks.classList.contains('show')) {
+          bars[0].style.transform = 'rotate(45deg) translate(8px, 8px)';
+          bars[1].style.opacity = '0';
+          bars[2].style.transform = 'rotate(-45deg) translate(8px, -8px)';
+        } else {
+          bars.forEach(bar => {
+            bar.style.transform = '';
+            bar.style.opacity = '';
+          });
+        }
+      }
+
+      hamburger.addEventListener("click", toggleNav);
+      hamburger.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleNav();
+        }
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+          if (navLinks.classList.contains('show')) {
+            toggleNav();
+          }
+        }
+      });
+
+      // Enhanced sidebar navigation with smooth scrolling
+      const sidebarLinks = document.querySelectorAll("aside.sidebar a");
+      const weeks = document.querySelectorAll("section.week");
+
+      // Smooth scroll with enhanced easing
+      sidebarLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const id = link.getAttribute("href").substring(1);
+          const section = document.getElementById(id);
+          if (section) {
+            const headerOffset = 120;
+            const elementPosition = section.offsetTop;
+            const offsetPosition = elementPosition - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+            
+            setActiveLink(id);
+            
+            // Add visual feedback
+            section.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+              section.style.transform = '';
+            }, 200);
+          }
+        });
+      });
+
+      function setActiveLink(id) {
+        sidebarLinks.forEach((link) => {
+          if (link.getAttribute("href") === `#${id}`) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+      }
+
+      // Enhanced scroll detection with intersection observer
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: 0.5
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveLink(entry.target.id);
+          }
+        });
+      }, observerOptions);
+
+      weeks.forEach(week => {
+        observer.observe(week);
+      });
+
+      // Loading animation for sections
+      function animateOnLoad() {
+        const sections = document.querySelectorAll('.week.loading');
+        sections.forEach((section, index) => {
+          setTimeout(() => {
+            section.classList.remove('loading');
+            section.classList.add('loaded', 'fade-in');
+          }, index * 100);
+        });
+      }
+
+      // Enhanced scroll animations
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      weeks.forEach(week => {
+        scrollObserver.observe(week);
+      });
+
+      // Initialize animations on page load
+      window.addEventListener('load', () => {
+        setTimeout(animateOnLoad, 300);
+      });
+
+      // Enhanced link hover effects
+      document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('mouseenter', (e) => {
+          e.target.style.transform = 'translateX(4px)';
+        });
+        
+        link.addEventListener('mouseleave', (e) => {
+          e.target.style.transform = '';
+        });
+      });
+
+      // Keyboard navigation for accessibility
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('show')) {
+          toggleNav();
+        }
+      });
+
+      // Add focus management for better accessibility
+      sidebarLinks.forEach(link => {
+        link.addEventListener('focus', () => {
+          link.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
