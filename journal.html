@@ -524,6 +524,40 @@
           margin-top: 2rem;
         }
       }
+
+      .visualization-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .viz-item {
+        text-align: center;
+      }
+
+      .viz-image {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .viz-image:hover {
+        transform: scale(1.05);
+      }
+
+      .viz-caption {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #666;
+        font-weight: 500;
+      }
       
       /* Loading state */
       .loading {
@@ -611,6 +645,21 @@
           <h3>Outcome</h3>
           <p>Ported three visualizations from the old Animint gallery to the new Animint2 gallery and submitted a pull request.</p>
           
+          <div class="visualization-gallery">
+            <div class="viz-item">
+              <img src="assets/tempviz.png" alt="American Temperature Maps" class="viz-image">
+              <p class="viz-caption">American Temperature Maps (#55)</p>
+            </div>
+            <div class="viz-item">
+              <img src="assets/worldbank.png" alt="World Bank Visualization" class="viz-image">
+              <p class="viz-caption">World Bank Paper (#41)</p>
+            </div>
+            <div class="viz-item">
+              <img src="assets/chip.png" alt="ChIP seq Data" class="viz-image">
+              <p class="viz-caption">ChIP seq Data Unaligned (#35)</p>
+            </div>
+          </div>
+          
           <h3>What I did</h3>
           <p>Due to ongoing exams, my time was limited, but I managed to:</p>
           <ul class="links-list">
@@ -626,6 +675,7 @@
             <li>Addressed mentor feedback on the 55th visualization</li>
           </ul>
           
+          <!-- Rest of your content remains the same -->
           <h3>Learnings</h3>
           <p>This week was incredibly educational as I:</p>
           <ul class="links-list">
@@ -671,9 +721,32 @@
           <h2 class="week-title">Week 0 (Community Bonding Period)</h2>
           <p class="dates">May 21st - May 28th, 2025</p>
           
-          <h3>Outcome</h3>
-          <p>Successfully resolved the geom_tile transition issue, created demonstration videos for previous visualizations, and ported six additional visualizations to the new gallery which were merged.</p>
-          
+           <div class="visualization-gallery">
+    <div class="viz-item">
+      <img src="assets/montreal.png" alt="Montreal Bikes Jan 2016" class="viz-image">
+      <p class="viz-caption">Montreal Bikes Jan 2016 (#43)</p>
+    </div>
+    <div class="viz-item">
+      <img src="assets/pdpa.png" alt="Demo of Constrained PDPA" class="viz-image">
+      <p class="viz-caption">Demo of Constrained PDPA (#31)</p>
+    </div>
+    <div class="viz-item">
+      <img src="assets/cost.png" alt="Cost/slack minimization" class="viz-image">
+      <p class="viz-caption">Cost/slack minimization (#30)</p>
+    </div>
+    <div class="viz-item">
+      <img src="assets/bic.png" alt="Segmentation model selection with BIC" class="viz-image">
+      <p class="viz-caption">Segmentation model selection with BIC (#50)</p>
+    </div>
+    <div class="viz-item">
+      <img src="assets/neural.png" alt="Gradient descent for neural networks" class="viz-image">
+      <p class="viz-caption">Gradient descent for neural networks (#5)</p>
+    </div>
+    <div class="viz-item">
+      <img src="assets/grad.png" alt="Gradient descent for regression" class="viz-image">
+      <p class="viz-caption">Gradient descent for regression (#6)</p>
+    </div>
+  </div>
           <h3>What I did</h3>
           <ul class="links-list">
             <li>Solved geom_tile transition issue</li>
@@ -796,29 +869,83 @@
         </section>
 
         <section class="week loading" id="week1">
-          <h2 class="week-title">Week 1</h2>
-          <p class="dates">June 2 - June 9, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
+        <h2 class="week-title">Week 1</h2>
+        <p class="dates">June 2 - June 9, 2025</p>
+        
+        <h3>Outcome</h3>
+        <p>Refined tooltip PR with all requested changes, investigated geom_abline solutions, and implemented initial geom_aligned_boxes with quadratic programming optimization.</p>
+        
+        <h3>What I did</h3>
+        <ul class="links-list">
+          <li>Made all requested changes in tooltip PR, refining and improving minute details</li>
+          <li>Investigated further into geom_abline issue and identified two potential approaches for handling clipping</li>
+          <li>Opened new PR implementing <code>geom_aligned_boxes</code> (#203) - a custom geom for aligned rectangular labels</li>
+          <li>Implemented the core structure where each box is a <code>&lt;g class="geom"&gt;</code> group containing both <code>&lt;rect&gt;</code> (box) and <code>&lt;text&gt;</code> (label) elements</li>
+          <li>Integrated quadprog.js (JavaScript port of R's quadprog library) for label positioning optimization</li>
+          <li>Set up automatic text measurement system using browser's actual font metrics</li>
+          <li>Created bounding rectangle calculation that dynamically sizes boxes to fit measured text</li>
+        </ul>
+        
+         <h3>Learnings</h3>
+      <ul class="links-list">
+        <li><strong>geom_abline clipping approaches</strong>:
+          <ul>
+            <li>Option 1: Move clipping entirely to JS side, shifting pre_process function logic from R</li>
+            <li>Option 2: Handle clipping in compiler side by modifying z_animint.js update_axes function</li>
+            <li>Both approaches have trade-offs in terms of performance and code organization</li>
           </ul>
-        </section>
+        </li>
+        <li><strong>geom_aligned_boxes architecture and use case</strong>:
+          <ul>
+            <li>Addresses the need for non-overlapping labels in visualizations, particularly useful for time series data where multiple category labels need to appear near data points</li>
+            <li>Takes required aesthetics: x, y, label, plus optional ones like fill, color</li>
+            <li>Mimics R's directlabels::last.polygons functionality but adapted for animint2's JavaScript environment</li>
+            <li>Uses quadratic programming to optimize label positions: keeps x-positions fixed while adjusting y-positions to minimize overlaps</li>
+            <li>Solver minimizes distance from original y-values while ensuring no label collisions</li>
+            <li>Learned how different svg elements work. eg. we cant appened a <code>&lt;text&gt;</code> in a <code>&lt;rect&gt;</code> element in svg! (which i was trying to do before for this implementation.</li>
+          </ul>
+          </li>
+          <li>Integration of quadprog.js JavaScript port for optimization</li>
+          <li>Browser-based text sizing and bounding box calculations</li>
+        </ul>
+        
+        
+        <strong>Technical implementation insights</strong>:
+          <ul>
+            <li>Browser-based text measurement is crucial since font rendering varies across systems</li>
+            <li>Quadprog.js provides the mathematical optimization needed for clean label arrangement</li>
+            <li>Dynamic bounding box calculation ensures labels are properly contained within their rectangles</li>
+            <li>The optimization problem balances staying close to original positions vs avoiding overlaps</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <h3>Confusions</h3>
+      <ul class="links-list">
+        <li>The quadratic programming solver integration isn't functioning correctly yet - the optimization constraints and objective function need refinement</li>
+        <li>Need to implement proper error handling for cases where optimal positioning might not be feasible</li>
+        <li>Still evaluating which approach would be best for the geom_abline clipping issue</li>
+        <li>Debugging the quadprog.js parameter setup to ensure it correctly interprets the positioning constraints</li>
+      </ul>
+      
+      <h3>Next Week Targets</h3>
+      <ul class="links-list">
+        <li>Complete geom_aligned_boxes implementation by fixing the quadprog solver integration</li>
+        <li>Create comprehensive renderer tests for geom_aligned_boxes functionality</li>
+        <li>Get tooltip PR (#191) merged after addressing any final feedback</li>
+        <li>Implement robust error handling for edge cases in label positioning optimization</li>
+        <li>Test geom_aligned_boxes with various data scenarios to ensure reliability</li>
+      </ul>
+      
+      <h3>Links</h3>
+      <ul class="links-list">
+        <li><a href="https://github.com/animint/animint2/pull/191" target="_blank" rel="noopener">D3 tooltip PR (#191)</a></li>
+        <li><a href="https://github.com/animint/animint2/pull/203" target="_blank" rel="noopener">geom_aligned_boxes PR (#203)</a></li>
+        <li><a href="https://github.com/animint/animint2/issues/174" target="_blank" rel="noopener">geom_aligned_boxes issue (#174)</a></li>
+        <li><a href="https://tdhock.github.io/directlabels/docs/lineplot/posfuns/last.polygons.html" target="_blank" rel="noopener">R directlabels::last.polygons reference</a></li>
+        <li><a href="https://github.com/albertosantini/quadprog" target="_blank" rel="noopener">quadprog.js library</a></li>
+      </ul>
+      </section>
 
         <section class="week loading" id="week2">
           <h2 class="week-title">Week 2</h2>
