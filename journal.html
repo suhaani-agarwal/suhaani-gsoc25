@@ -570,6 +570,81 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      .feature-showcase {
+        margin: 25px 0;
+        padding: 25px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+        border-left: 4px solid #007bff;
+      }
+
+      .showcase-item {
+        text-align: center;
+      }
+
+      .showcase-item h4 {
+        color: #495057;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+
+      .video-container {
+        position: relative;
+        max-width: 280px;
+        width: 280px;
+        height: 280px;
+        margin: 0 auto;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+      }
+
+      .video-container:hover {
+        transform: scale(1.02);
+      }
+
+      .demo-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 12px;
+      }
+
+      .video-caption {
+        margin-top: 12px;
+        font-size: 0.85em;
+        color: #6c757d;
+        font-style: italic;
+        line-height: 1.4;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .video-container {
+          max-width: 240px;
+          width: 240px;
+          height: 240px;
+        }
+        
+        .feature-showcase {
+          padding: 20px 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .video-container {
+          max-width: 200px;
+          width: 200px;
+          height: 200px;
+        }
+      }
       
       /* Interactive hover effects for links */
       section.week ul.links-list li a {
@@ -815,7 +890,19 @@
           
           <h3>Outcome</h3>
           <p>Investigated geom_abline bug and proposed solution, implemented new D3-based tooltip system.</p>
-          
+           <div class="feature-showcase">
+            <div class="showcase-item">
+              <h4>D3-based Tooltip Implementation</h4>
+              <div class="video-container">
+                <video autoplay loop muted playsinline class="demo-video">
+                  <source src="assets/tooltip.mp4" type="video/mp4">
+                  <source src="path/to/tooltip-demo.webm" type="video/webm">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p class="video-caption">Interactive tooltips following mouse position with D3 integration</p>
+            </div>
+          </div>
           <h3>What I did</h3>
           <ul class="links-list">
             <li>Analyzed geom_abline boundary issue (<code>#142</code>) with reproducible examples</li>
