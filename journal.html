@@ -189,7 +189,7 @@
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(20px);
         padding: 1rem;
-        width: 280px;
+        width: 380px;
         position: sticky;
         top: 120px;
         height: fit-content;
@@ -592,9 +592,9 @@
 
       .video-container {
         position: relative;
-        max-width: 280px;
-        width: 280px;
-        height: 280px;
+        max-width: 65%;
+        width: 100%;
+        height : 80%;
         margin: 0 auto;
         border-radius: 12px;
         overflow: hidden;
@@ -1039,23 +1039,101 @@
           <p class="dates">June 9 - June 16, 2025</p>
           
           <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
+          <p>Completed core implementation of geom_aligned_boxes with optimized label positioning, fixed remaining tooltip issues, and got PR #191 merged.</p>
+          <div class="feature-showcase">
+            <div class="showcase-item">
+              <h4>geom_aligned_boxes interactive example</h4>
+              <div class="video-container">
+                <video autoplay loop muted playsinline class="demo-video">
+                  <source src="assets/aligned_box.mov" type="video/mp4">
+                  <source src="path/to/aligned.webm" type="video/webm">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p class="video-caption">geom_aligned_boxes positioned in a way that they dont collide using quadprog.js</p>
+            </div>
+          </div>
           <h3>What I did</h3>
-          <p>Development in progress...</p>
+          <ul class="links-list">
+            <li>Implemented quadratic programming solution for label positioning inspired by directlabels::qp.labels</li>
+            <li>Created comprehensive renderer tests for geom_aligned_boxes covering:
+              <ul>
+                <li>Basic rendering</li>
+                <li>Collision avoidance</li>
+                <li>Interactive behavior</li>
+                <li>Boundary constraints</li>
+              </ul>
+            </li>
+            <li>Fixed final tooltip issues and got PR #191 merged</li>
+            <li>Added multiple usage examples demonstrating different configurations</li>
+            <li>Identified and documented edge cases:
+              <ul>
+                <li>Text styling issues</li>
+                <li>Plot boundary violations</li>
+                <li>StyleActions conflicts</li>
+              </ul>
+            </li>
+          </ul>
           
           <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
+          <ul class="links-list">
+            <li><strong>Finally cracked the label positioning!</strong> After digging through the directlabels source code, I got the quadratic programming approach working. It's cool how it:
+              <ul>
+                <li>Handels overlaps and avoids collisions between labels using constraints in qp solver</li>
+                <li>Uses a constraint matrix to prevent overlaps</li>
+                <li>Minimizes the distance from original positions</li>
+              </ul>
+            </li>
+            
+            <li><strong>SVG structure headaches:</strong> 
+              <ul>
+                <li>Learned the hard way you can't nest text inside rect elements (facepalm)</li>
+                <li>Had to completely restructure as &lt;g&gt; containing separate &lt;rect&gt; and &lt;text&gt;</li>
+                <li>Still fighting with style inheritance - the geom group keeps grabbing styles when it shouldn't (for the geom_aligned_boxes that have ClickSelects in them)</li>
+              </ul>
+            </li>
+            
+            <li><strong>Testing adventures:</strong>
+              <ul>
+                <li>Built tests for every weird edge case I could think of</li>
+                <li>Found some sneaky bugs where labels would escape the plot area during interactions</li>
+                <li>Learned to test performance with a lot of labels</li>
+              </ul>
+            </li>
+            
+            <li><strong>Tooltip victory lap:</strong>finally got the D3 tooltip PR merged!</li>
+          </ul>
+
+          <h3>Confusions/Issues</h3>
+          <ul class="links-list">
+            <li><strong>Style inheritance problem:</strong>
+              <ul>
+                <li>Added <code>if (g_info.geom == "aligned_boxes") return;</code> to skip automatic styling</li>
+                <li>But clickSelects elements still get unwanted style attributes</li>
+                <li>Can't figure out where the styles are leaking through</li>
+              </ul>
+            </li>
+            
+            <li><strong>Boundary issues:</strong>
+              <ul>
+                <li>Labels near plot edges occasionally escape containment (only to a limited extent and only the left side of x limit)</li>
+                <li>Need to add proper clipping</li>
+              </ul>
+            </li>
           
           <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
+          <ul class="links-list">
+            <li>Finalize geom_aligned_boxes styling implementation</li>
+            <li>Begin investigating code coverage tools for animint2</li>
+            <li>Prepare geom_aligned_boxes documentation</li>
+          </ul>
           
           <h3>Links</h3>
           <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
+            <li><a href="https://github.com/animint/animint2/pull/203" target="_blank" rel="noopener">geom_aligned_boxes PR (#203)</a></li>
+            <li><a href="https://tdhock.github.io/directlabels/docs/utility.function/posfuns/qp.labels.html" target="_blank" rel="noopener">qp.labels reference</a></li>
+            <li><a href="https://github.com/tdhock/directlabels/blob/master/R/utility.function.R" target="_blank" rel="noopener">directlabels source</a></li>
+            <li><a href="https://github.com/animint/animint2/pull/191" target="_blank" rel="noopener">Merged tooltip PR (#191)</a></li>
           </ul>
         </section>
 
