@@ -645,6 +645,21 @@
           height: 200px;
         }
       }
+      .full-width-image {
+        width: 100%;
+        max-width: calc(100% - 220px); /* Subtract sidebar width */
+        margin: 1rem 0;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      }
+
+      .image-caption {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #777;
+        margin-top: -0.5rem;
+        margin-bottom: 1.5rem;
+      }
       
       /* Interactive hover effects for links */
       section.week ul.links-list li a {
@@ -957,7 +972,7 @@
 
         <section class="week loading" id="week1">
         <h2 class="week-title">Week 1</h2>
-        <p class="dates">June 2 - June 9, 2025</p>
+        <p class="dates">June 2 - June 8, 2025</p>
         
         <h3>Outcome</h3>
         <p>Refined tooltip PR with all requested changes, investigated geom_abline solutions, and implemented initial geom_aligned_boxes with quadratic programming optimization.</p>
@@ -1036,7 +1051,7 @@
 
         <section class="week loading" id="week2">
           <h2 class="week-title">Week 2</h2>
-          <p class="dates">June 9 - June 16, 2025</p>
+          <p class="dates">June 9 - June 15, 2025</p>
           
           <h3>Outcome</h3>
           <p>Completed core implementation of geom_aligned_boxes with optimized label positioning, fixed remaining tooltip issues, and got PR #191 merged.</p>
@@ -1139,31 +1154,108 @@
 
         <section class="week loading" id="week3">
           <h2 class="week-title">Week 3</h2>
-          <p class="dates">June 16 - June 23, 2025</p>
+          <p class="dates">June 16 - June 22, 2025</p>
           
           <h3>Outcome</h3>
-          <p>Coming soon...</p>
+          <p>Refined geom_label_aligned implementation based on mentor feedback, began setting up code coverage tools, and ported additional visualizations to the gallery.</p>
           
+          <img src="assets/label_aligned.png" alt="geom_label_aligned visualization showing properly aligned labels with optimized box sizing" class="full-width-image">
+          <p class="image-caption">geom_label_aligned now with proper hjust alignment and optimized box sizing</p>
+
           <h3>What I did</h3>
-          <p>Development in progress...</p>
+          <ul class="links-list">
+            <li>Implemented major improvements to geom_label_aligned based on mentor feedback:
+              <ul>
+                <li>Changed default fill from black to white</li>
+                <li>Fixed horizontal width calculation (no more extra space!)</li>
+                <li>Added proper hjust support (0, 0.5, 1)</li>
+                <li>Renamed from geom_aligned_boxes to geom_label_aligned</li>
+              </ul>
+            </li>
+            <li>Refactored test files into single comprehensive test:
+              <ul>
+                <li>Created <code>check_aligned_box_collisions</code> helper function</li>
+                <li>Moved vertical alignment tests to WorldBank viz</li>
+                <li>Consolidated all test cases</li>
+              </ul>
+            </li>
+            <li>Added detailed documentation about QP usage:
+              <ul>
+                <li>Clarified it runs after showSelected filtering</li>
+                <li>Explains vertical vs horizontal alignment modes</li>
+              </ul>
+            </li>
+            <li>Began implementing code coverage:
+              <ul>
+                <li>Setting up V8 for JS coverage</li>
+                <li>Configuring covr for R coverage</li>
+                <li>Integrating with Codecov</li>
+              </ul>
+            </li>
+            <li>Ported visualization #9/18 (Changepoint detection) to new gallery</li>
+          </ul>
           
           <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
+          <ul class="links-list">
+            <li><strong>Geom refinement lessons:</strong>
+              <ul>
+                <li>Because of the unique structure of this geom, a lot of default styling structures implemented in animint2 for all geoms dont work for this one. So I had to implement some conditions in certain cases.</li>
+                <li>Text alignment is trickier than expected (hjust wasn't working as intended). I had to implement a get_hjust function to get it working for the new geom. </li>
+                <li>Naming conventions should match ggplot2 ecosystem</li>
+              </ul>
+            </li>
+            
+            <li><strong>Testing insights:</strong>
+              <ul>
+                <li>DRY principle applies to tests too - helper functions are essential</li>
+                <li>Real-world examples (like WorldBank) make great test cases</li>
+              </ul>
+            </li>
+            
+            <li><strong>Code coverage setup:</strong>
+              <ul>
+                <li>V8 engine quirks when measuring JS coverage. </li>
+                <li>How covr instruments R code</li>
+                <li>Codecov report interpretation</li>
+              </ul>
+            </li>
+          </ul>
+
+          <h3>Confusions/Issues</h3>
+          <ul class="links-list">
+            <li><strong>QP behavior quirk:</strong>
+              <ul>
+                <li>Labels with same x-values affect others even when not colliding</li>
+                <li>Need to adjust constraint matrix to be smarter about this</li>
+              </ul>
+            </li>
+            
+            <li><strong>Code coverage challenges:</strong>
+              <ul>
+                <li>Getting V8 to properly track JS execution paths</li>
+                <li>Merging R and JS coverage reports</li>
+              </ul>
+            </li>
+          </ul>
           
           <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
+          <ul class="links-list">
+            <li>Fix QP constraint matrix for non-colliding labels</li>
+            <li>Complete initial code coverage implementation</li>
+            <li>Finalize geom_label_aligned implementation and documentation</li>
+          </ul>
           
           <h3>Links</h3>
           <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
+            <li><a href="https://github.com/animint/animint2/pull/203" target="_blank" rel="noopener">geom_label_aligned PR (#203)</a></li>
+            <li><a href="https://github.com/animint/animint2/pull/208" target="_blank" rel="noopener">Code coverage PR (#208)</a></li>
+            <li><a href="https://github.com/animint/gallery/pull/33" target="_blank" rel="noopener">Gallery visualization PR (#33)</a></li>
+            <li><a href="https://suhaani-agarwal.github.io/gallery/" target="_blank" rel="noopener">Forked gallery preview</a></li>
           </ul>
         </section>
         <section class="week loading" id="week4">
           <h2 class="week-title">Week 4</h2>
-          <p class="dates">June 23 - June 30, 2025</p>
+          <p class="dates">June 23 - June 29, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1187,7 +1279,7 @@
         </section>
         <section class="week loading" id="week5">
           <h2 class="week-title">Week 5</h2>
-          <p class="dates">June 30 - July 7, 2025</p>
+          <p class="dates">June 30 - July 6, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1211,7 +1303,7 @@
         </section>
         <section class="week loading" id="week6">
           <h2 class="week-title">Week 6</h2>
-          <p class="dates">July 8 - July 14, 2025</p>
+          <p class="dates">July 7 - July 13, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1235,7 +1327,7 @@
         </section>
         <section class="week loading" id="week7">
           <h2 class="week-title">Week 7</h2>
-          <p class="dates">July 15 - July 21, 2025</p>
+          <p class="dates">July 14 - July 20, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1259,7 +1351,7 @@
         </section>
         <section class="week loading" id="week8">
           <h2 class="week-title">Week 8</h2>
-          <p class="dates">July 22 - July 28, 2025</p>
+          <p class="dates">July 21 - July 27, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1283,7 +1375,7 @@
         </section>
         <section class="week loading" id="week9">
           <h2 class="week-title">Week 9</h2>
-          <p class="dates">July 29 - August, 2025</p>
+          <p class="dates">July 28 - August 3, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1307,7 +1399,7 @@
         </section>
         <section class="week loading" id="week10">
           <h2 class="week-title">Week 10</h2>
-          <p class="dates">June 16 - June 23, 2025</p>
+          <p class="dates">August 4 - August 10, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1331,7 +1423,7 @@
         </section>
         <section class="week loading" id="week11">
           <h2 class="week-title">Week 11</h2>
-          <p class="dates">June 16 - June 23, 2025</p>
+          <p class="dates">August 11 - August 17, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1355,7 +1447,7 @@
         </section>
         <section class="week loading" id="week12">
           <h2 class="week-title">Week 12</h2>
-          <p class="dates">June 16 - June 23, 2025</p>
+          <p class="dates">August 17 - August 23, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
@@ -1379,55 +1471,7 @@
         </section>
         <section class="week loading" id="week13">
           <h2 class="week-title">Week 13</h2>
-          <p class="dates">June 16 - June 23, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
-        <section class="week loading" id="week14">
-          <h2 class="week-title">Week 14</h2>
-          <p class="dates">June 16 - June 23, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
-        <section class="week loading" id="week15">
-          <h2 class="week-title">Week 15</h2>
-          <p class="dates">June 16 - June 23, 2025</p>
+          <p class="dates">August 24 - August 30, 2025</p>
           
           <h3>Outcome</h3>
           <p>Coming soon...</p>
