@@ -1638,14 +1638,12 @@
           e.target.style.transform = '';
         });
       });
-
       // Keyboard navigation for accessibility
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navLinks.classList.contains('show')) {
           toggleNav();
         }
       });
-
       // Add focus management for better accessibility
       sidebarLinks.forEach(link => {
         link.addEventListener('focus', () => {
