@@ -1253,29 +1253,50 @@
             <li><a href="https://suhaani-agarwal.github.io/gallery/" target="_blank" rel="noopener">Forked gallery preview</a></li>
           </ul>
         </section>
-        <section class="week loading" id="week4">
-          <h2 class="week-title">Week 4</h2>
+        <section class="week" id="week4">
+          <h2 class="week-title">Week 4 - When Labels Learned to Behave</h2>
           <p class="dates">June 23 - June 29, 2025</p>
+
+          <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/WDYEExT0MDk" frameborder="0" allowfullscreen></iframe>
+            <p class="image-caption">Watch how labels now stay politely within plot boundaries and shrink when needed (vertical alignment)</p>
+          </div>
+
+          <h3>This Week's Progress</h3>
+          <p>Finally cracked the label positioning challenges! My geom_label_aligned now handles crowded plots much more gracefully:</p>
           
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
+          <ul>
+            <li><strong>Strict Plot Limits:</strong> No more label jailbreaks! Added firm constraints that keep all labels inside the plot area, no matter what.</li>
+            <li><strong>Smart Shrinking:</strong> When space gets tight, labels now automatically scale down (but stay readable) until everything fits. It's like watching polite commuters adjust in a crowded train!</li>
+            <li><strong>Group Optimization:</strong> Realized distant labels shouldn't affect each other, so I implemented proximity grouping before running the QP solver. Much faster and better results!</li>
           </ul>
+
+          <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ZbQxPecMLAg" frameborder="0" allowfullscreen></iframe>
+            <p class="image-caption">Horizontal alignment demo showing the same good behavior</p>
+          </div>
+
+          <h3>Behind the Scenes</h3>
+          <p>The shrinking mechanism was trickier than I expected. At first labels would shrink too much or not enough, but after several iterations I found the right balance. The key was:</p>
+          
+          <ol>
+            <li>Calculate total space needed vs available</li>
+            <li>Apply uniform shrinking for groups of labels close to each other and overlapping only when necessary</li>
+          </ol>
+
+          <p>Also made progress on code coverage, though it's been a bumpy ride. Trying to merge R's covr with JS coverage from Chrome DevTools feels like teaching two pets to work together - they speak different languages!</p>
+
+          <h3>Next Week Targets</h3>
+          <p>Need to:</p>
+          <ul>
+            <li>Refine the geom_label_aligned PR if needed and get it merged</li>
+            <li>Maybe adding some error points for geom_label_aligned like: "vjust cannot be used with vertical alignment" and vica-verca
+            </li>
+            <li>Finalize the coverage pipeline</li>
+            <li>Write proper docs so others can use these features</li>
+          </ul>
+
+          <p>Overall, super satisfying to see labels now handle tight spaces so elegantly. The videos really show how far we've come! Do watch it for better understand!</p>
         </section>
         <section class="week loading" id="week5">
           <h2 class="week-title">Week 5</h2>
