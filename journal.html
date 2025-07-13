@@ -186,6 +186,7 @@
       
       /* Enhanced sidebar with light theme */
       aside.sidebar {
+        flex: 0 0 280px; /* Don't allow shrinking */
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(20px);
         padding: 1rem;
@@ -569,6 +570,14 @@
       .loaded {
         opacity: 1;
         transform: translateY(0);
+      }
+      .demo-video-small {
+        width: 300px;
+        max-width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: block;
+        margin: 1rem auto;
       }
 
       .feature-showcase {
@@ -1298,54 +1307,107 @@
 
           <p>Overall, super satisfying to see labels now handle tight spaces so elegantly. The videos really show how far we've come! Do watch it for better understand!</p>
         </section>
-        <section class="week loading" id="week5">
-          <h2 class="week-title">Week 5</h2>
-          <p class="dates">June 30 - July 6, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
-        <section class="week loading" id="week6">
-          <h2 class="week-title">Week 6</h2>
-          <p class="dates">July 7 - July 13, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
+       <section class="week loading" id="week5">
+  <h2 class="week-title">Week 5</h2>
+  <p class="dates">June 30 - July 6, 2025</p>
+  
+  <h3>Outcome</h3>
+  <p>
+    Successfully integrated R and JavaScript code coverage reporting into the Animint2 CI pipeline. R coverage is now computed using <code>covr</code> and uploaded to Codecov, while JavaScript coverage is retrieved via Chrome DevTools and transformed into the Istanbul format using <code>v8-to-istanbul</code>. Combined reports now appear in the Codecov dashboard.
+  </p>
+
+  <h3>What I did</h3>
+  <p>
+    This week’s primary focus was code coverage infrastructure. I began with R coverage using the <code>covr</code> package. After setting up instrumentation, I updated the GitHub Actions workflow so that <code>covr::package_coverage()</code> runs after compiler tests, and the resulting coverage file is uploaded to Codecov using their bash uploader.
+    <br><br>
+    For JavaScript, I collected raw coverage data during renderer tests using Chrome DevTools Protocol’s JS coverage collector. This produced raw V8-format JSON coverage, but Codecov requires Istanbul JSON. To convert the raw format, I initially experimented with manually copying the <code>v8-to-istanbul</code> library into the repo and using only its lib-based source files, but this approach introduced maintenance complexity and unresolved dependency issues.
+    <br><br>
+    I pivoted to a cleaner solution by modifying the CI workflow to install Node modules specifically for the renderer test phase. This allowed me to install <code>v8-to-istanbul</code> via <code>npm</code> and use its CLI to convert the raw JSON into a Codecov-acceptable Istanbul JSON file. The Istanbul format includes mappings for statement, function, and branch coverage aligned to file paths, and is required for Codecov to properly visualize coverage across JS source files.
+    <br><br>
+    With this conversion step working reliably, I merged both R and JS coverage into the Codecov upload step. The Animint2 repository now generates unified code coverage reports from both languages. These reports are visible at:  
+    <a href="https://app.codecov.io/github/animint/animint2">https://app.codecov.io/github/animint/animint2</a>
+  </p>
+
+  <h3>Learnings</h3>
+  <p>
+    I learned how to integrate heterogeneous coverage systems (R and JS) in a unified CI environment. Specifically for a unique structure like that of animint2, there was no coverage option available by default so had to make one using chrome devtools coverage collection for JS coverage. For R, <code>covr</code> integrates directly with the package test suite, but for JS, raw V8 coverage must be explicitly captured, stored, and transformed into the Istanbul schema.
+
+  </p>
+
+  <h3>Confusions/Issues</h3>
+  <p>
+    One issue raised was that the Codecov reports currently include files under the <code>inst/htmljs/vendor/</code> directory, which are not part of our authored source code and shouldn’t be included in coverage statistics. I plan to add configuration to tell Codecov to ignore that path.
+    <br><br>
+    Another issue is with the CRAN test suite in the CI workflow. Currently, even when the CRAN check produces a <strong>WARNING</strong>,
+     the job exits with status 0 (green build). I need to update the GitHub Action so that any WARNING during <code>R CMD check --as-cran</code> results in a failed job (non-zero exit).
+  </p>
+
+  <h3>Next Week Targets</h3>
+  <p>
+    - Add ignore rules for <code>vendor/</code> files in Codecov configuration. <br>
+    - Update GitHub Actions so the CRAN test fails on WARNINGs. <br>
+    - Begin polishing <code>geom_label_aligned</code> based on remaining issues from mentor review.
+  </p>
+
+  <h3>Links</h3>
+  <ul class="links-list">
+    <li><a href="https://app.codecov.io/github/animint/animint2" target="_blank" rel="noopener">Codecov Dashboard – All Commits</a></li>
+    <li><a href="https://app.codecov.io/github/animint/animint2/commit/1747fde5868452bd9651a8637022bb3b75b84836/tree/inst/htmljs?dropdown=coverage" target="_blank" rel="noopener">Coverage Report Including vendor/ Files</a></li>
+    <li><a href="https://github.com/animint/animint2/pull/208" target="_blank" rel="noopener">Coverage PR (#208)</a></li>
+  </ul>
+</section>
+
+       <section class="week loading" id="week6">
+  <h2 class="week-title">Week 6</h2>
+  <p class="dates">July 7 - July 13, 2025</p>
+  
+  <h3>Outcome</h3>
+  <p>
+    All major coverage-related issues were resolved and the PR was successfully merged. Animint2 now supports unified R + JavaScript code coverage reporting through Codecov, with comment summaries and file-level insights available for every commit and pull request. I also implemented smooth transitions for <code>geom_label_aligned</code>, added user-level control to hide label background rectangles, and began refining the grouping logic used in label position optimization.
+  </p>
+
+  <video controls class="demo-video-small">
+    <source src="assets/smooth.mov" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <p class="image-caption">Smooth transitions added for <code>geom_label_aligned</code></p>
+
+  <h3>What I did</h3>
+  <p>
+    I wrapped up and merged the code coverage implementation. Codecov now posts automated comments on all PRs and commit pushes, showing exactly which lines are covered and which aren't. This dramatically improves review visibility and helps prioritize test improvements. Coverage is uploaded after CI runs for both R (via <code>covr</code>) and JavaScript (via <code>v8-to-istanbul</code>), and can be browsed at:  
+    <a href="https://app.codecov.io/github/animint/animint2">https://app.codecov.io/github/animint/animint2</a>.
+    <br><br>
+    I also resolved the issue where CRAN tests with <strong>NOTEs</strong> or <strong>WARNINGs</strong> were still passing (green build). The GitHub Actions workflow now correctly fails when any CRAN check emits a NOTE or WARNING, ensuring stricter CI validation.
+    <br><br>
+    On the graphics side, I implemented smooth transitions for <code>geom_label_aligned</code>. Previously, transitions weren’t working as expected due to its unique SVG structure — specifically, each label consisted of a <code>&lt;g class="geom"&gt;</code> with both <code>&lt;rect&gt;</code> and <code>&lt;text&gt;</code> inside. Unlike other geoms, these child elements weren’t receiving the transition logic. I updated the renderer logic in <code>animint.js</code> to explicitly apply transitions to these nested SVG elements within the <code>geom_label_aligned</code> block. This now enables smooth animations on reposition and re-render.
+    <br><br>
+    Another key feature added this week was the ability to hide the rectangular background behind the label. In response to mentor feedback asking whether borders could be disabled, I introduced a new argument: <code>background_rect = TRUE/FALSE</code>. When set to <code>FALSE</code>, no <code>&lt;rect&gt;</code> is drawn behind the text. This gives users more control over the appearance of label elements. I also added a live example of this to the <code>worldbank-facets-map.R</code> visualization.
+    <br><br>
+    <div class="viz-item" style="max-width: 1000px; margin: 1.5rem 0;">
+  <img src="assets/background_rect.png" alt="Label with no background rectangle" 
+       class="viz-image"
+       style="max-width: 100%; width: 50%; height: auto;">
+  <p class="viz-caption">Labels without background rect using <code>background_rect = FALSE</code></p>
+</div>
+
+    Finally, I worked on refining the logic used to group labels for position optimization. Currently, <code>geom_label_aligned</code> uses quadratic programming (QP) to avoid collisions, but only within label groups. The grouping is based on whether labels lie at "similar" positions on the axis perpendicular to alignment (e.g., y-axis for horizontal alignment). This similarity is determined using label height (or width) as a threshold, so that labels with overlapping or near-overlapping positions get grouped.
+    <br><br>
+    While this works well in many cases, it can lead to over-grouping in cases where slight overlaps on the perpendicular axis shouldn’t trigger alignment optimization. I created test cases and visualizations to explore alternative grouping strategies:
+    <ul>
+      <li><strong>Exact-position grouping:</strong> Only group labels that lie on exactly the same y (or x) value.</li>
+      <li><strong>Reduced-threshold grouping:</strong> Group labels that are very close in position, but using a smaller similarity threshold than full label size.</li>
+    </ul>
+    The latter option seems more flexible, allowing QP to optimize labels that are visually close while avoiding unnecessary adjustment of slightly spaced elements. I documented these tradeoffs with annotated examples and posted a comment summarizing the options. I'm now awaiting mentor feedback on which strategy we should adopt going forward.
+  </p>
+
+  <h3>Links</h3>
+  <ul class="links-list">
+    <li><a href="https://app.codecov.io/github/animint/animint2" target="_blank" rel="noopener">Codecov Dashboard</a></li>
+    <li><a href="https://github.com/animint/animint2/pull/208" target="_blank" rel="noopener">Coverage PR (#208)</a></li>
+    <!-- <li><a href="https://github.com/animint/gallery/blob/main/worldbank-facets-map.R" target="_blank" rel="noopener">Example: background_rect = FALSE</a></li> -->
+  </ul>
+</section>
+
         <section class="week loading" id="week7">
           <h2 class="week-title">Week 7</h2>
           <p class="dates">July 14 - July 20, 2025</p>
