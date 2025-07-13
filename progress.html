@@ -480,8 +480,134 @@
     <main>
       <div class="page-header">
         <h1>Progress Report</h1>
-        <p class="subtitle">Here I will be posting the final report of my progress before the mid-term evaluations.</p>
+        <div class="progress-section fade-in">
+  <h2>Timeline of Contributions</h2>
+  <p>Here is a detailed week-by-week timeline of my work and pull requests throughout the Community Bonding and Coding Period.</p>
+  
+  <div class="timeline">
+
+    <!-- Community Bonding -->
+    <div class="timeline-item">
+      <div class="timeline-date">May 5–20, 2025</div>
+      <div class="timeline-content">
+        <strong>Community Bonding Period</strong><br />
+        - Set up local development environment for <code>animint2</code> and <code>animint/gallery</code>.<br />
+        - Explored open issues and got familiar with existing codebase and test infrastructure.<br />
+        <!-- - Had weekly sync meetings with mentors <strong>Toby Dylan Hocking</strong> and <strong>Yufan Fei</strong> to define Phase 1 goals. -->
       </div>
+    </div>
+
+    <!-- Week 1 -->
+    <div class="timeline-item">
+      <div class="timeline-date">May 21–27, 2025</div>
+      <div class="timeline-content">
+        <strong><a href="https://github.com/animint/gallery/pull/29" target="_blank">PR #29, 27</a></strong>: Started Visualization Porting <br />
+        - Added demo video and confirmed backward compatibility.<br />
+        - Kickstarted gallery migration to <code>animint2</code>.
+      </div>
+    </div>
+
+    <!-- Week 2 -->
+    <div class="timeline-item">
+      <div class="timeline-date">May 28 – June 2, 2025</div>
+      <div class="timeline-content">
+        <strong><a href="https://github.com/animint/gallery/pull/29" target="_blank">PR #29</a></strong>: Gallery Port Phase I.<br />
+        - Ported 3 visualizations: American Temperature Maps, World Bank paper, ChIP-seq data.<br />
+        - Added demo videos and fixed minor rendering bugs.
+      </div>
+    </div>
+
+    <!-- Week 3 -->
+    <div class="timeline-item">
+      <div class="timeline-date">June 3 – 10, 2025</div>
+      <div class="timeline-content">
+        <strong><a href="https://github.com/animint/gallery/pull/30" target="_blank">PR #30</a></strong>: Gallery Port Phase II.<br />
+        - Ported 6 more visualizations including iris scatterplot and economic datasets.<br />
+        - Resolved <code>geom_tile</code> transition issue.
+      </div>
+    </div>
+
+    <!-- Week 4 -->
+    <div class="timeline-item">
+      <div class="timeline-date">June 11 – 17, 2025</div>
+      <div class="timeline-content">
+        <strong><a href="https://github.com/animint/animint2/pull/197" target="_blank">PR #197</a></strong>: D3 Tooltip System.<br />
+        - Replaced old <code>title based</code> tooltips with faster D3-powered solution.<br />
+        - Supported <code>aes(tooltip)</code> in all geoms<br />
+        - Enhanced interactivity and responsiveness of tooltips.
+      </div>
+    </div>
+
+    <!-- Week 5 -->
+    <div class="timeline-item">
+      <div class="timeline-date">June 18 – 24, 2025</div>
+      <div class="timeline-content">
+        <strong><a href="https://github.com/animint/animint2/pull/203" target="_blank">PR #203</a></strong>: Initial version of <code>geom_label_aligned</code> (formerly <code>geom_aligned_boxes</code>).<br />
+        - Enables non-overlapping aligned labels using quadratic programming.<br />
+        - Useful for clean annotation of dense timeseries data.<br />
+        - Currently working on refining this geom.
+      </div>
+    </div>
+
+    <!-- Week 6 -->
+    <div class="timeline-item">
+      <div class="timeline-date">June 25 – July 5, 2025</div>
+      <div class="timeline-content">
+        <strong><a href="https://github.com/animint/animint2/pull/208" target="_blank">PR #208</a></strong>: Combined Code Coverage with Codecov.<br />
+        - Integrated both R and JS test coverage reports.<br />
+        - Coverage deployed and visualized via Codecov.<br />
+        - Enhanced CI/CD feedback loop for PRs.
+      </div>
+    </div>
+
+    <!-- Ongoing -->
+    <div class="timeline-item">
+      <div class="timeline-date">July 5 – Present</div>
+      <div class="timeline-content">
+        <strong>Work in Progress:</strong> Refinement of <code>geom_label_aligned</code>.<br />
+        - Debugging transition animations for <code>&lt;rect&gt;</code> and <code>&lt;text&gt;</code> alignment.<br />
+        - Collaborating with mentors to polish functionality and improve visual clarity.<br />
+        - Plan to submit final PR before midterm evaluation.
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+        <!-- <p class="subtitle">Here I will be posting the final report of my progress before the mid-term evaluations.</p> -->
+      </div>
+
+      
+
+
+
+
+      <div class="progress-section fade-in">
+  <h2>Overall Progress</h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-number">7</span>
+      <div class="stat-label">Pull Requests (5 Merged, 2 Open)</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">11</span>
+      <div class="stat-label">Visualizations Ported , some including demo videos</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">3</span>
+      <div class="stat-label">Major Features Added</div>
+    </div>
+    <!-- <div class="stat-card">
+      <span class="stat-number">75%</span>
+      <div class="stat-label">Work Completed</div>
+    </div> -->
+  </div>
+  <!-- <div class="progress-bar">
+    <div class="progress-fill" style="width: 60%;"></div>
+  </div>
+  <div class="progress-text">Progress: 75% Complete</div> -->
+</div>
+
 
       <!-- <div class="progress-section fade-in">
         <h2>Overall Progress</h2>
