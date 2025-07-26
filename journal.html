@@ -1410,29 +1410,66 @@
 </section>
 
         <section class="week loading" id="week7">
-          <h2 class="week-title">Week 7</h2>
-          <p class="dates">July 14 - July 20, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
+  <h2 class="week-title">Week 7</h2>
+  <p class="dates">July 14 – July 20, 2025</p>
+
+  <img src="assets/label_final.png" alt="Smooth Label Alignment Demo" style="max-width: 800px; height: auto; display: block; margin: 1rem 0;" />
+  <p class="image-caption">Smooth transitions and perfect alignment — finally achieved!</p>
+
+  <h3>Outcome</h3>
+  <p>
+    This week was one of the most fulfilling milestones of my GSoC journey so far — my long-awaited <code>geom_label_aligned</code> pull request was finally merged! After weeks of constant iteration, design discussions, testing edge cases, and refining visual behavior, it’s now part of the main animint2 codebase. 🎉
+  </p>
+  <p>
+    Even more exciting, I officially cleared my <strong>GSoC midterm evaluation</strong>. My mentor's feedback was incredibly uplifting.
+  </p>
+
+  <h3>What I Worked On</h3>
+  <ul>
+    <li>
+      <strong>Fixed confusing vertical alignment logic:</strong> The label vertical alignment was originally unintuitive — setting <code>vjust = 1</code> actually placed the label at the top, and 0 at the bottom, which felt reversed. I restructured the logic to use <code>1 - get_vjust(d)</code>, flipping the behavior so it’s now natural and aligns labels as expected.
+    </li>
+    <li>
+      <strong>Resolved label transition glitches:</strong> Previously, when new labels appeared in the plot, they awkwardly flew in from the corner of the SVG canvas. This happened because the transition animations applied uniformly, even to new elements. I fixed this by ensuring transitions only run for elements that existed in the previous state. This made animations feel buttery-smooth and visually correct.
+    </li>
+    <li>
+      <strong>Made label spacing more reliable:</strong> I added a test to check that all aligned labels maintain at least 3px vertical spacing. It computes gaps between label bounding boxes. This guarantees our label layout stays readable and clutter-free:
+      <pre><code>expect_true(all(gaps &gt;= 3), info = paste("Min gap found:", min(gaps)))</code></pre>
+    </li>
+    <li>
+      <strong>Polished and hardened tests:</strong> My mentor rightly pointed out that using <code>length(rx)</code> (i.e., computed length) in a test is fragile. I replaced it with a literal value that reflects the actual number of expected labels, making the test stricter and more future-proof:
+      <pre><code>expect_equal(as.numeric(rx), rep(5, 12))</code></pre>
+    </li>
+    <li>
+      <strong>Experimented with label centering offsets:</strong> I noticed that SVG <code>getBBox()</code> often gives bounding boxes that include font descenders (like in the letter ‘g’), which made some labels appear slightly off-center. I manually experimented with offsetting the <code>y</code> position using <code>+ d.size / 3</code> to visually balance it. This is not a perfect fix, hence this idea was dropped for now, to keep the code simple.
+    </li>
+  </ul>
+
+  <h3>✅ Midterm Evaluation Passed</h3>
+  <p>
+    I had my midterm evaluation this week, and Im super happy to share that it went really well. The appreciation form my mentor was incredibly encouraging.
+  </p>
+  <p>
+    The PR that was merged:
+    <a href="https://github.com/animint/animint2/pull/203" target="_blank">PR #203 - geom_label_aligned</a>
+  </p>
+
+  <h3>Whats Next?</h3>
+  <p>
+    Ill now be diving into <a href="https://github.com/animint/animint2/issues/211" target="_blank">Issue #211</a>, which is about combining the renderer and compiler tests. I need to see i that is even beneficial or not. Currently, the R code coverage is tracked from compiler tests and JS code coverage from rednderer tests.
+  </p>
+  <p>
+    
+  </p>
+
+  <h3>🔗 Links</h3>
+  <ul class="links-list">
+    <li><a href="https://github.com/animint/animint2/pull/203" target="_blank" rel="noopener">PR #203 - geom_label_aligned merged 🎉</a></li>
+    <li><a href="https://github.com/animint/animint2/issues/211" target="_blank" rel="noopener">Issue #211 - Combining renderer and compiler tests?</a></li>
+    <li><a href="https://app.codecov.io/github/animint/animint2" target="_blank" rel="noopener">Codecov Dashboard</a></li>
+  </ul>
+</section>
+
         <section class="week loading" id="week8">
           <h2 class="week-title">Week 8</h2>
           <p class="dates">July 21 - July 27, 2025</p>
