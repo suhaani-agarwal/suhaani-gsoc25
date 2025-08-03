@@ -1470,54 +1470,146 @@
   </ul>
 </section>
 
-        <section class="week loading" id="week8">
-          <h2 class="week-title">Week 8</h2>
-          <p class="dates">July 21 - July 27, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
-        <section class="week loading" id="week9">
-          <h2 class="week-title">Week 9</h2>
-          <p class="dates">July 28 - August 3, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
+       <section class="week loading" id="week8">
+  <h2 class="week-title">Week 8</h2>
+  <p class="dates">July 21 – July 27, 2025</p>
+
+  <h3>Outcome</h3>
+  <p>
+    This week I successfully merged <a href="https://github.com/animint/animint2/pull/212" target="_blank" rel="noopener">PR #212</a>, which implemented a consolidated testing workflow combining compiler and renderer test suites. This resolved <a href="https://github.com/animint/animint2/issues/211" target="_blank" rel="noopener">Issue #211</a> and partially addressed <a href="https://github.com/animint/animint2/issues/210" target="_blank" rel="noopener">Issue #210</a>. The restructured setup increased R coverage by ~4% while maintaining JS coverage, and significantly improved test reporting structure and maintainability.
+  </p>
+
+  <h3>What I Worked On</h3>
+  <ul>
+    <li>
+      <strong>Combined compiler and renderer test execution:</strong> Updated <code>tests/testthat.R</code> to call both renderer and compiler tests in the same session. Previously, only compiler-side tests were run with <code>covr::package_coverage()</code>, so renderer-related R code was excluded from R coverage.
+    </li>
+    <li>
+      <strong>Restructured GitHub Actions:</strong> Split test workflows into two separate CI jobs:
+      <ul>
+        <li>
+          <strong>JS_COVERAGE:</strong> Executes full test suite (compiler + renderer) in a Chromote-enabled session to collect JavaScript coverage.
+        </li>
+        <li>
+          <strong>R_COVERAGE:</strong> Runs the same test suite under <code>covr::package_coverage()</code> to collect R coverage across both test types.
+        </li>
+      </ul>
+    </li>
+    <li>
+      <strong>Addressed workflow time tradeoffs:</strong> Although the new setup adds ~5 minutes to the workflow, it removes redundant test runs (previously tests were run once normally and once again via covr) and ensures all R code is accounted for. I also removed legacy test files (<code>test-tt-inter.R</code>) that were causing conflicts or duplicating logic.
+    </li>
+    <li>
+      <strong>Investigated merging both coverages into one job:</strong> This was technically infeasible. <code>covr</code> instruments the package into a temp directory which breaks how Chromote serves test content, leading to broken JS coverage collection. So I opted for clean separation of coverage concerns into two dedicated jobs.
+    </li>
+    <li>
+      <strong>Contributed to related efforts:</strong> Reviewed <a href="https://github.com/animint/animint2/pull/209" target="_blank" rel="noopener">PR #209</a> on migrating RSelenium to Chromote-based shiny tests and discussed implications of deprecated test files and restructuring.
+    </li>
+  </ul>
+
+  <h3>Learnings</h3>
+  <ul>
+    <li>How <code>covr::package_coverage()</code> builds instrumented environments and how that interferes with browser-based test frameworks.</li>
+    <li>Effective use of separate CI jobs to isolate concerns without duplicating entire test runtimes.</li>
+    <li>Workflow optimizations in GitHub Actions: using matrix jobs, conditional steps, and flags to fine-tune resource allocation and caching.</li>
+  </ul>
+
+  <h3>Confusions</h3>
+  <ul>
+    <li>
+      Initially unsure why test output wasn’t printing in CI when using <code>covr::package_coverage()</code>. Eventually traced this to the lack of real-time logging in instrumented sessions.
+    </li>
+    <li>
+      Whether we could safely replace <code>tests_run(filter = ...)</code> with a plain <code>tests_run()</code>. Determined that certain files like <code>test-tt-inter.R</code> were failing or outdated, so better to exclude them until fixed.
+    </li>
+  </ul>
+
+  <h3>Next Week Targets</h3>
+  <ul>
+    <li>Add detailed documentation to <a href="https://github.com/animint/animint2/wiki" target="_blank">animint2 wiki</a> explaining how coverage is collected across R and JS codebases.</li>
+    <li>Start working on fixing <a href="https://github.com/animint/animint2/issues/213" target="_blank">Issue #213</a> – the <code>geom_abline</code> problem with unnecessary ticks on infinite lines.</li>
+  </ul>
+
+  <h3>🔗 Links</h3>
+  <ul class="links-list">
+    <li><a href="https://github.com/animint/animint2/pull/212" target="_blank" rel="noopener">PR #212 – Combined test coverage</a></li>
+    <li><a href="https://github.com/animint/animint2/issues/211" target="_blank" rel="noopener">Issue #211 – Merge test pipelines</a></li>
+    <li><a href="https://github.com/animint/animint2/issues/210" target="_blank" rel="noopener">Issue #210 – Coverage strategy discussions</a></li>
+    <li><a href="https://github.com/animint/animint2/pull/209" target="_blank" rel="noopener">PR #209 – RSelenium to Chromote migration</a></li>
+  </ul>
+</section>
+
+       <section class="week loading" id="week9">
+  <h2 class="week-title">Week 9</h2>
+  <p class="dates">July 28 – August 3, 2025</p>
+
+  <h3>Outcome</h3>
+  <p>
+    This week, I collaborated on <a href="https://github.com/animint/animint2/pull/209" target="_blank" rel="noopener">PR #209</a> to help integrate <code>shiny</code>-based renderer tests using <code>ChromoteSession</code>. I also authored two wiki articles to document the updated coverage architecture in our GitHub Actions workflow. In parallel, I began working on <a href="https://github.com/animint/animint2/pull/214" target="_blank" rel="noopener">PR #214</a>, addressing the <a href="https://github.com/animint/animint2/issues/142" target="_blank" rel="noopener">geom_abline clipping issue</a> during axis rescaling.
+  </p>
+
+  <h3>What I Did</h3>
+  <ul>
+    <li>
+      Contributed feedback and suggestions on <a href="https://github.com/animint/animint2/pull/209" target="_blank" rel="noopener">PR #209</a> to help resolve persistent test warnings in <code>test-shiny.R</code> involving random ports and unexpected session behavior.
+    </li>
+    <li>
+      Proposed reuse of <code>tests_init()</code> and <code>tests_run()</code> to unify Shiny and non-Shiny tests under a shared <code>ChromoteSession</code>. This change helped simplify test session initialization and eliminated the need for redundant <code>ChromoteSession$new()</code> calls within each test.
+    </li>
+    <li>
+      Investigated warnings like <code>localhost:3147 cannot be opened</code> and recommended switching from random to fixed ports to ensure consistent test behavior across CI and local environments.
+    </li>
+    <li>
+      Authored two wiki articles to support future contributors:
+      <ul>
+        <li><a href="https://github.com/animint/animint2/wiki/Coverage-Collection-in-GitHub-Actions" target="_blank">Coverage Collection in GitHub Actions</a></li>
+        <li><a href="https://github.com/animint/animint2/wiki/Understanding-and-Using-Codecov" target="_blank">Understanding and Using Codecov</a></li>
+      </ul>
+    </li>
+    <li>
+      Started working on <a href="https://github.com/animint/animint2/pull/214" target="_blank">PR #214</a> to fix the <code>geom_abline</code> plot clipping issue reported in <a href="https://github.com/animint/animint2/issues/142" target="_blank">Issue #142</a>. Implemented a prototype fix in JavaScript that recalculates line endpoints using the updated scale domains after axis changes.
+    </li>
+  </ul>
+
+  <h3>Learnings</h3>
+  <ul>
+    <li>
+      Gained deeper insight into how <code>ChromoteSession</code> interacts with Shiny applications and how separate servers (via <code>start_shiny_app()</code>, <code>start_rmd_app()</code>) complicate centralized test orchestration.
+    </li>
+    <li>
+      Learned that Shiny tests require dedicated ports and separate server instances, which cannot be reliably managed via <code>tests_init()</code> alone without architectural adjustments.
+    </li>
+    <li>
+      Understood how R-side preprocessing in <code>GeomAbline</code> fails to apply after <code>update_axes()</code> due to missing clipping logic in the renderer, prompting a need for JS-side endpoint recalculation.
+    </li>
+  </ul>
+
+  <h3>Confusions</h3>
+  <ul>
+    <li>
+      Unsure whether reusing the same <code>ChromoteSession</code> across compiler, renderer, and Shiny tests might cause state conflicts — requires further validation with more complex test scenarios.
+    </li>
+    <li>
+      Open architectural question: Should geometric preprocessing logic for clipping live entirely in the renderer or be shared between compiler and renderer layers?
+    </li>
+  </ul>
+
+  <h3>Next Week Targets</h3>
+  <ul>
+    <li>Test the <code>geom_abline</code> clipping fix across various <code>update_axes()</code> scenarios using real-world plots and new renderer tests.</li>
+    <li>Write a failing renderer test to replicate the bug in <a href="https://github.com/animint/animint2/issues/142" target="_blank">Issue #142</a> and verify that the fix in PR #214 resolves it without regression.</li>
+    <li>Begin cleanup and de-duplication of old R-side clipping logic if the JS implementation proves robust.</li>
+  </ul>
+
+  <h3>🔗 Links</h3>
+  <ul class="links-list">
+    <li><a href="https://github.com/animint/animint2/pull/209" target="_blank" rel="noopener">PR #209 – Add Chromote-based Shiny renderer tests</a></li>
+    <li><a href="https://github.com/animint/animint2/issues/142" target="_blank" rel="noopener">Issue #142 – geom_abline out of plot range</a></li>
+    <li><a href="https://github.com/animint/animint2/pull/214" target="_blank" rel="noopener">PR #214 – JS-side clipping fix for geom_abline</a></li>
+    <li><a href="https://github.com/animint/animint2/wiki/Coverage-Collection-in-GitHub-Actions" target="_blank">📘 Coverage Collection in GitHub Actions (wiki)</a></li>
+    <li><a href="https://github.com/animint/animint2/wiki/Understanding-and-Using-Codecov" target="_blank">📘 Understanding and Using Codecov (wiki)</a></li>
+  </ul>
+</section>
+
         <section class="week loading" id="week10">
           <h2 class="week-title">Week 10</h2>
           <p class="dates">August 4 - August 10, 2025</p>
