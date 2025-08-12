@@ -1611,33 +1611,73 @@
 </section>
 
         <section class="week loading" id="week10">
-          <h2 class="week-title">Week 10</h2>
-          <p class="dates">August 4 - August 10, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
+  <h2 class="week-title">Week 10</h2>
+  <p class="dates">August 4 – August 10, 2025</p>
+
+  <h3>Outcome</h3>
+  <p>
+    This week, I focused on finalizing <a href="https://github.com/animint/animint2/pull/214" target="_blank">PR #214</a> to resolve the <code>geom_abline</code> clipping issue when <code>update_axes()</code> is applied. The fix successfully keeps ablines within plot bounds, but introduced a slope discrepancy that I am currently investigating. I also investigated <a href="https://github.com/animint/animint2/issues/216" target="_blank">Issue #216</a>, where the year selection menu disappeared in the World Bank data viz, and identified both a workaround and a likely cause.
+  </p>
+
+  <h3>What I Did</h3>
+  <ul>
+    <li>
+      Completed the shift of <code>geom_abline</code> clipping logic from the R (compiler) side to the JavaScript (renderer) side in <a href="https://github.com/animint/animint2/pull/214" target="_blank">PR #214</a>. This ensures lines are clipped correctly after <code>update_axes()</code> changes the view limits.
+    </li>
+    <li>
+      Added a dedicated renderer test to confirm that ablines remain within bounds after axis updates.
+    </li>
+    <li>
+      Discovered a slope difference in the plotted ablines after the renderer-side change and began investigating the cause.
+    </li>
+    <li>
+      Looked into <a href="https://github.com/animint/animint2/issues/216" target="_blank">Issue #216</a> and reproduced the missing year selection menu bug in the World Bank visualization.
+    </li>
+    <li>
+      Found that placing <code>make_tallrect()</code> above the <code>geom_text()</code> in the scatterplot restores the year selector. 
+    </li>
+  </ul>
+
+  <h3>Learnings</h3>
+  <ul>
+    <li>
+      Confirmed that moving geometric calculations to the renderer allows for dynamic clipping after plot updates, but also makes visual output dependent on JavaScript-side numeric precision and logic.
+    </li>
+    <li>
+      Learned that the <code>is.variable.value</code> property can suppress selection menus when the first encountered geom for a selection variable uses named <code>clickSelects</code>/<code>showSelected</code>.
+    </li>
+    <li>
+      Understood that the geom ordering in plot definitions can unintentionally affect UI elements due to this selector logic.
+    </li>
+  </ul>
+
+  <h3>Confusions</h3>
+  <ul>
+    <li>
+      Still unsure why the renderer-side computation for <code>geom_abline</code> results in different slopes compared to the compiler-side logic.
+    </li>
+    <li>
+      Need to verify whether changing selector default logic will have unintended side effects on other visualizations.
+    </li>
+  </ul>
+
+  <h3>Next Week Targets</h3>
+  <ul>
+    <li>Resolve the slope discrepancy in the <code>geom_abline</code> renderer-side implementation.</li>
+    <li>Push a test case for the year selection menu bug in <a href="https://github.com/animint/animint2/issues/216" target="_blank">Issue #216</a>.</li>
+    <li>Implement a fix for selector logic so that <code>selectize</code> defaults consider all geoms for a given variable.</li>
+  </ul>
+
+  <h3>🔗 Links</h3>
+  <ul class="links-list">
+    <li><a href="https://github.com/animint/animint2/pull/214" target="_blank" rel="noopener">PR #214 – JS-side clipping fix for geom_abline</a></li>
+    <li><a href="https://github.com/animint/animint2/issues/216" target="_blank" rel="noopener">Issue #216 – Year selection menu missing in World Bank viz</a></li>
+  </ul>
+</section>
+
         <section class="week loading" id="week11">
           <h2 class="week-title">Week 11</h2>
           <p class="dates">August 11 - August 17, 2025</p>
-          
           <h3>Outcome</h3>
           <p>Coming soon...</p>
           
