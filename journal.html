@@ -729,11 +729,9 @@
         <a href="#week8">Week 8</a>
         <a href="#week9">Week 9</a>
         <a href="#week10">Week 10</a>
-        <a href="#week11">Week 10</a>
-        <a href="#week12">Week 11</a>
-        <a href="#week13">Week 12</a>
-        <a href="#week14">Week 13</a>
-        <a href="#week15">Week 14</a>
+        <a href="#week11">Week 11</a>
+        <a href="#week12">Week 12</a>
+        <a href="#week13">Week 13</a>
       </aside>
 
       <article class="content">
@@ -1676,28 +1674,77 @@
 </section>
 
         <section class="week loading" id="week11">
-          <h2 class="week-title">Week 11</h2>
-          <p class="dates">August 11 - August 17, 2025</p>
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
+  <h2 class="week-title">Week 11</h2>
+  <p class="dates">August 11 – August 17, 2025</p>
+
+  <h3>Outcome</h3>
+  <p>
+    This week, I completed the <code>geom_abline</code> fix, ensuring lines are clipped correctly even after <code>update_axes()</code> changes. 
+    I also restored compiler-side computations for static plots, which resolved the failing CRAN tests, and verified the correctness of the 
+    changepoint detection example. The updated plot now renders ablines neatly within plot boundaries.
+  </p>
+
+  <img src="assets/abline.png" alt="ABLINE" style="max-width: 800px; height: auto; display: block; margin: 1rem 0;" />
+  <p class="image-caption">fixed geom_abline bug</p>
+
+  <h3>What I Did</h3>
+  <ul>
+    <li>
+      Finalized the <code>geom_abline</code> fix and confirmed that slope discrepancies are resolved.
+    </li>
+    <li>
+      Added a dedicated renderer test to demonstrate that ablines remain within plot boundaries after <code>update_axes()</code>.
+    </li>
+    <li>
+      Fixed the CRAN test failures by restoring <code>x</code>, <code>xend</code>, <code>y</code>, and <code>yend</code> computations on the compiler side for static plots.
+    </li>
+    <li>
+      Corrected the <a href="https://suhaani-agarwal.github.io/figure-loss-small-data/" target="_blank">geom_abline changepoint detection example</a>, 
+      where ablines now stay properly clipped inside the plotting area.
+    </li>
+    <li>
+      Prepared the corrected changepoint detection plot for inclusion in the gallery.
+    </li>
+  </ul>
+
+  <h3>Learnings</h3>
+  <ul>
+    <li>
+      Confirmed the need to retain compiler-side computations for static plots, since renderer-only logic isn’t sufficient for non-interactive outputs.
+    </li>
+    <li>
+      Understood how combining compiler- and renderer-side logic ensures consistency across static and interactive visualizations.
+    </li>
+    <li>
+      Learned that comprehensive renderer tests are valuable for guarding against regressions after <code>update_axes()</code> operations.
+    </li>
+  </ul>
+
+  <h3>Confusions</h3>
+  <ul>
+    <li>
+      No major confusions this week; main challenges were in diagnosing why CRAN tests were failing for static plots.
+    </li>
+  </ul>
+
+  <h3>Next Week Targets</h3>
+  <ul>
+    <li>
+      Investigate <a href="https://github.com/animint/animint2/issues/216" target="_blank">Issue #216</a>, where the year selection menu no longer appears 
+      in the World Bank visualization, and implement a fix as suggested by my mentor.
+    </li>
+  </ul>
+
+  <h3>🔗 Links</h3>
+  <ul class="links-list">
+    <li><a href="https://suhaani-agarwal.github.io/figure-loss-small-data/" target="_blank" rel="noopener">Changepoint detection example with corrected ablines</a></li>
+    <li><a href="https://github.com/animint/animint2/pull/214" target="_blank" rel="noopener">PR #214 – geom_abline clipping fix</a></li>
+    <li><a href="https://github.com/animint/animint2/issues/216" target="_blank" rel="noopener">Issue #216 – Year selection menu missing</a></li>
+  </ul>
+
+  
+</section>
+
         <section class="week loading" id="week12">
           <h2 class="week-title">Week 12</h2>
           <p class="dates">August 17 - August 23, 2025</p>
