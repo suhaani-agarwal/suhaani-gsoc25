@@ -560,16 +560,102 @@
       </div>
     </div>
 
-    <!-- Ongoing -->
-    <div class="timeline-item">
-      <div class="timeline-date">July 5 – Present</div>
-      <div class="timeline-content">
-        <strong>Work in Progress:</strong> Refinement of <code>geom_label_aligned</code>.<br />
-        - Debugging transition animations for <code>&lt;rect&gt;</code> and <code>&lt;text&gt;</code> alignment.<br />
-        - Collaborating with mentors to polish functionality and improve visual clarity.<br />
-        - Plan to submit final PR before midterm evaluation.
-      </div>
-    </div>
+    <!-- Week 6: July 5 – July 11 -->
+<div class="timeline-item">
+  <div class="timeline-date">July 5 – July 11, 2025</div>
+  <div class="timeline-content">
+    <strong>geom_label_aligned Development</strong><br />
+    - Continued refinement and testing of <code>geom_label_aligned</code>, ensuring non-overlapping labels using quadratic programming.<br />
+    - Debugged transition animations and alignment issues for <code>&lt;rect&gt;</code> and <code>&lt;text&gt;</code> elements.<br />
+    - Collaborated with mentors to finalize the feature design and visual clarity.
+  </div>
+</div>
+
+<!-- Week 7: July 12 – July 18 -->
+<div class="timeline-item">
+  <div class="timeline-date">July 12 – July 18, 2025</div>
+  <div class="timeline-content">
+    <strong>geom_label_aligned Merge & Documentation</strong><br />
+    - Successfully merged <code>geom_label_aligned</code> into <code>animint2</code>, introducing a major new feature.<br />
+    - Added extensive test coverage to verify label placement in various scenarios.<br />
+    - Documented usage examples for contributors and users.
+  </div>
+</div>
+
+<!-- Week 8: July 19 – July 25 -->
+<div class="timeline-item">
+  <div class="timeline-date">July 19 – July 25, 2025</div>
+  <div class="timeline-content">
+    <strong>Coverage Integration – PR #212</strong><br />
+    - Merged compiler and renderer tests to ensure complete R and JS coverage.<br />
+    - Created two separate workflow jobs: <code>JS_COVERAGE</code> and <code>R_COVERAGE</code>.<br />
+    - Increased R coverage by ~4%, ensuring all tests are correctly included.<br />
+    - Conducted checks on R Selenium PR to confirm stable browser-based testing across environments.
+  </div>
+</div>
+
+<!-- Week 9: July 26 – August 1 -->
+<div class="timeline-item">
+  <div class="timeline-date">July 26 – August 1, 2025</div>
+  <div class="timeline-content">
+    <strong>Wiki Documentation</strong><br />
+    - Authored two comprehensive wiki pages explaining coverage collection and Codecov usage:
+      <ul>
+        <li><a href="https://github.com/animint/animint2/wiki/Coverage-Collection-in-GitHub-Actions" target="_blank">Coverage Collection in GitHub Actions</a></li>
+        <li><a href="https://github.com/animint/animint2/wiki/Understanding-and-Using-Codecov" target="_blank">Understanding and Using Codecov</a></li>
+      </ul>
+    - Provided guidance for future contributors on running tests and interpreting coverage reports.
+  </div>
+</div>
+
+<!-- Week 10: August 2 – August 8 -->
+<div class="timeline-item">
+  <div class="timeline-date">August 2 – August 8, 2025</div>
+  <div class="timeline-content">
+    <strong>geom_abline Clipping Issue – PR #214</strong><br />
+    - Investigated and resolved critical <code>geom_abline</code> bug where lines exceeded plot boundaries when <code>update_axes()</code> was applied.<br />
+    - Shifted clipping logic from R-side (compiler) to JS-side (renderer) to handle dynamic axis updates.<br />
+    - Added dedicated renderer tests to confirm correct clipping.<br />
+    - Began analyzing slope discrepancies caused by renderer-side computation.
+  </div>
+</div>
+
+<!-- Week 11: August 9 – August 15 -->
+<div class="timeline-item">
+  <div class="timeline-date">August 9 – August 15, 2025</div>
+  <div class="timeline-content">
+    <strong>geom_abline & CRAN Test Fixes</strong><br />
+    - Resolved slope discrepancies for static and dynamic plots.<br />
+    - Restored compiler-side computation for static plots to make CRAN examples pass.<br />
+    - Corrected the changepoint detection example; ablines now remain within plot boundaries.<br />
+    - Added the corrected example to the <code>animint2</code> gallery: <a href="https://suhaani-agarwal.github.io/figure-loss-small-data/" target="_blank">Figure Loss – Small Data</a>.
+  </div>
+</div>
+
+<!-- Week 12: August 16 – August 22 -->
+<div class="timeline-item">
+  <div class="timeline-date">August 16 – August 22, 2025</div>
+  <div class="timeline-content">
+    <strong>Finalizing geom_abline & Gallery Integration</strong><br />
+    - Verified all <code>geom_abline</code> test cases and ensured dynamic clipping works across <code>update_axes()</code> scenarios.<br />
+    - Integrated the fixed changepoint detection plot into the gallery.<br />
+    - Polished code by removing redundancies and improving readability.<br />
+    - Added the <code>geom_abline</code> example to the gallery as the 22nd visualization: <a href="https://suhaani-agarwal.github.io/gallery/" target="_blank">Gallery Preview</a>.
+  </div>
+</div>
+
+<!-- Week 13: August 23 – August 26 -->
+<div class="timeline-item">
+  <div class="timeline-date">August 23 – August 26, 2025</div>
+  <div class="timeline-content">
+    <strong>Wrap-Up & Reflections</strong><br />
+    - Conducted final checks on all merged and open PRs to ensure stability and completeness.<br />
+    - Reviewed gallery examples, tests, and coverage reports for consistency.<br />
+    - Prepared notes and documentation for the end-of-GSoC report.<br />
+    - Looking forward to continued contributions to <code>animint2</code> and building on the features introduced during GSoC.
+  </div>
+</div>
+
     
   </div>
 </div>
@@ -586,15 +672,15 @@
   <h2>Overall Progress</h2>
   <div class="stats-grid">
     <div class="stat-card">
-      <span class="stat-number">7</span>
-      <div class="stat-label">Pull Requests (5 Merged, 2 Open)</div>
+      <span class="stat-number">10</span>
+      <div class="stat-label">Pull Requests (7 Merged, 3 Open)</div>
     </div>
     <div class="stat-card">
-      <span class="stat-number">11</span>
+      <span class="stat-number">12</span>
       <div class="stat-label">Visualizations Ported , some including demo videos</div>
     </div>
     <div class="stat-card">
-      <span class="stat-number">3</span>
+      <span class="stat-number">5</span>
       <div class="stat-label">Major Features Added</div>
     </div>
     <!-- <div class="stat-card">
