@@ -641,6 +641,28 @@
         </div>
 
         <div class="card">
+  <div class="card-content">
+    <div class="card-info">
+      <div class="pr-number">PR #220</div>
+      <h3>Fixing tooltip='two\nlines' data not rendering issue</h3>
+      <a href="https://github.com/animint/animint2/pull/197" target="_blank" class="pr-link">
+        Fixing tooltip='two\nlines' data not rendering issue
+      </a>
+      <p class="description">
+        Fixed an issue where tooltips containing newline characters (e.g. <code>"two\nlines"</code>) 
+        caused rendering failures when combined with other aesthetics such as 
+        <code>aes(color=...)</code>. The problem was due to TSV export with 
+        <code>quote=FALSE</code>, which broke parsing when fields contained newlines. 
+        The TSV writer now uses <code>quote="auto"</code>, ensuring fields with 
+        <code>\n</code> are preserved correctly. On the rendering side, newline characters 
+        in tooltips are converted to <code>&lt;br&gt;</code>, so multi-line tooltips 
+        are now properly supported.
+      </p>
+    </div>
+  </div>
+</div>
+
+        <div class="card">
           <div class="card-content">
             <div class="card-info">
               <div class="pr-number">PR #197</div>
@@ -722,7 +744,7 @@
         </a>
       </p>
       <p><strong>Project Proposal:</strong> 
-        <a href="/assets/proposal.pdf" target="_blank">
+        <a href="./assets/proposal.pdf" target="_blank">
           View Proposal
         </a>
       </p>
