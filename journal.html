@@ -1776,29 +1776,48 @@
 </section>
 
         <section class="week loading" id="week13">
-          <h2 class="week-title">Week 13</h2>
-          <p class="dates">August 24 - August 30, 2025</p>
-          
-          <h3>Outcome</h3>
-          <p>Coming soon...</p>
-          
-          <h3>What I did</h3>
-          <p>Development in progress...</p>
-          
-          <h3>Learnings</h3>
-          <p>To be documented...</p>
-          
-          <h3>Confusions</h3>
-          <p>To be addressed...</p>
-          
-          <h3>Next Week Targets</h3>
-          <p>Planning in progress...</p>
-          
-          <h3>Links</h3>
-          <ul class="links-list">
-            <li><a href="#" target="_blank" rel="noopener">Updates coming soon</a></li>
-          </ul>
-        </section>
+  <h2 class="week-title">Week 13</h2>
+  <p class="dates">August 24 - August 30, 2025</p>
+  
+  <h3>Outcome</h3>
+  <p>🎉 Successfully wrapped up my Google Summer of Code journey with <code>animint2</code>! Completed all planned contributions, finalized documentation, and ensured key features and bug fixes were merged into the library.</p>
+  
+  <h3>What I did</h3>
+  <ul>
+    <li>Finalized and tested <code>geom_label_aligned</code>, a new optimization-based labeling feature now part of <code>animint2</code>.</li>
+    <li>Completed the unified R + JavaScript coverage pipeline, ensuring reliable test coverage across compiler and renderer.</li>
+    <li>Documented coverage workflows and Codecov integration in project wikis.</li>
+    <li>Fixed critical rendering issues like the <code>geom_abline</code> clipping bug.</li>
+    <li>Implemented D3-powered tooltips, improving interactivity and scalability of dashboards.</li>
+    <li>
+      Fixed an issue where tooltips containing newline characters (e.g. <code>"two\nlines"</code>) 
+      caused rendering failures when combined with other aesthetics such as 
+      <code>aes(color=...)</code>. The problem was due to TSV export with 
+      <code>quote=FALSE</code>, which broke parsing when fields contained newlines. 
+      The TSV writer now uses <code>quote="auto"</code>, ensuring fields with 
+      <code>\n</code> are preserved correctly. On the rendering side, newline characters 
+      in tooltips are converted to <code>&lt;br&gt;</code>, so multi-line tooltips 
+      are now properly supported.
+    </li>
+    <li>Reviewed and checked open PRs (including Rselenium workflows) for stability and readiness.</li>
+  </ul>
+  
+  <h3>Learnings</h3>
+  <p>Gained deep technical experience in bridging R and JavaScript for large-scale interactive visualizations, debugging across compiler/renderer layers, and writing maintainable, professional open-source code.</p>
+  
+  <h3>Confusions</h3>
+  <p>No confusions this week — just wrapping things up and celebrating completion 🚀</p>
+  
+  <h3>Next Week Targets</h3>
+  <p>Plan to continue contributing to <code>animint2</code> beyond GSoC, polishing features and exploring new ideas for interactive data visualization.</p>
+  
+  <h3>Links</h3>
+  <ul class="links-list">
+    <li><a href="https://suhaani-agarwal.github.io/suhaani-gsoc25/" target="_blank" rel="noopener">Full GSoC 2025 Progress Report</a></li>
+    <li><a href="https://github.com/animint/animint2/pulls" target="_blank" rel="noopener">All Pull Requests</a></li>
+  </ul>
+</section>
+
       </article>
     </main>
     <footer>&copy; 2025 Suhaani Agarwal - Google Summer of Code Development Journal</footer>
